@@ -15,17 +15,25 @@ bool mouseclickbutton(sf::Vector2i MousePos, sf::RectangleShape button)
 
 int main()
 {
-	sf::RenderWindow MainMenu(sf::VideoMode(800, 600), "Tanks Menu", sf::Style::Close);
-	//sf::RenderWindow GameWindow(sf::VideoMode(800, 600), "Tanks", sf::Style::Close);
+	sf::RenderWindow MainMenu(sf::VideoMode(1000, 600), "Tanks Menu", sf::Style::Close);
+	sf::RenderWindow GameWindow(sf::VideoMode(800, 600), "Tanks", sf::Style::Close);
+	GameWindow.setVisible(false);
 
 	sf::Vector2f baserectangle = sf::Vector2f(100.0f, 50.0f);
 	sf::Vector2f largerRectangle = sf::Vector2f(200.0f, 100.0f);
+	sf::Vector2f tankVector = sf::Vector2f(20.0f, 20.0f);
 	sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle);
+	
+
+	sf::RectangleShape Player1(tankVector);
+	Player1.setFillColor(sf::Color(27, 68, 135));
+	Player1.setOrigin(Player1.getSize().x, Player1.getSize().y);
+
+
 	ExitButton.setOrigin(baserectangle.x / 2, baserectangle.y / 2); SingleplayerButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 
-	ExitButton.setPosition(400.0f, 500.0f);
-	SingleplayerButton.setPosition(400.0f, 400.0f);
-//	Exit.setOrigin(sf::Vector2f(50.0f, 50.0f));
+	ExitButton.setPosition(MainMenu.getSize().x/2, 500.0f);
+	SingleplayerButton.setPosition(MainMenu.getSize().x / 2, 400.0f);
 
 	sf::Texture ExitButtonText, SingpleButtonText;
 	ExitButtonText.loadFromFile("Textures/MenuText.png");
@@ -38,7 +46,6 @@ int main()
 		sf::Event evnt;
 		while (MainMenu.pollEvent(evnt))
 		{
-			
 			switch (evnt.type)
 			{
 			case evnt.Closed:
@@ -50,6 +57,27 @@ int main()
 			sf::Vector2i mousepos = sf::Mouse::getPosition(MainMenu);
 			if (mouseclickbutton(mousepos, ExitButton) == true)
 				MainMenu.close();
+			if (mouseclickbutton(mousepos, SingleplayerButton) == true)
+			{
+				GameWindow.setVisible(true);
+				MainMenu.setVisible(false);
+				while (GameWindow.isOpen())
+				{
+					Player1.setPosition(100.0f, 100.0f);
+
+					sf::Event evnt1;
+					while (GameWindow.pollEvent(evnt1))
+					{
+						if (evnt1.type == evnt1.Closed)
+							GameWindow.close();
+					}
+
+					GameWindow.draw(Player1);
+					GameWindow.display();
+					GameWindow.clear(sf::Color(230, 230, 230));
+				}
+				MainMenu.setVisible(true);
+			}
 		}
 		
 		MainMenu.draw(ExitButton);
