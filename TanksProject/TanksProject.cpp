@@ -61,9 +61,9 @@ int main()
 			{
 				GameWindow.setVisible(true);
 				MainMenu.setVisible(false);
+				Player1.setPosition(100.0f, 100.0f);
 				while (GameWindow.isOpen())
 				{
-					Player1.setPosition(100.0f, 100.0f);
 
 					sf::Event evnt1;
 					while (GameWindow.pollEvent(evnt1))
@@ -72,13 +72,35 @@ int main()
 							GameWindow.close();
 					}
 
+					
+
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+					{
+						Player1.move(-0.1f, 0.0f);
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+					{
+						Player1.move(0.0f, 0.1f);
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+					{
+						Player1.move(0.1f, 0.0f);
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+					{
+						Player1.move(0.0f, -0.1f);
+					}
+
 					GameWindow.draw(Player1);
 					GameWindow.display();
 					GameWindow.clear(sf::Color(230, 230, 230));
 				}
 				MainMenu.setVisible(true);
 			}
+
 		}
+
+
 		
 		MainMenu.draw(ExitButton);
 		MainMenu.draw(SingleplayerButton);
