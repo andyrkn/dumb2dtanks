@@ -19,7 +19,7 @@ void inittextures(sf::RectangleShape tanks[], int nr, sf::Vector2f tanksize, sf:
 		tanks[i].setPosition(x, 350.0f);
 		tanks[i].setSize(tanksize);
 		tanks[i].setTextureRect(sf::IntRect(0, 0, texturesize.x, texturesize.y));
-
+		tanks[i].setOrigin(tanksize.x / 2, tanksize.y / 2);
 		maintanks[i] = tanks[i];
 	}
 

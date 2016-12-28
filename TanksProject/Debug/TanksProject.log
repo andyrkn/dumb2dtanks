@@ -1,6 +1,7 @@
 ﻿  TanksProject.cpp
-c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(41): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(42): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
-  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)
+c:\users\andeea\desktop\tanks\tanksrepository\tanksproject\tankheader.h(18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\andeea\desktop\tanks\tanksrepository\tanksproject\tanksproject.cpp(42): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\andeea\desktop\tanks\tanksrepository\tanksproject\tanksproject.cpp(43): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\andeea\desktop\tanks\tanksrepository\tanksproject\tanksproject.cpp(79): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  TanksProject.vcxproj -> C:\Users\Andeea\Desktop\Tanks\TanksRepository\Debug\TanksProject.exe
+  TanksProject.vcxproj -> C:\Users\Andeea\Desktop\Tanks\TanksRepository\Debug\TanksProject.pdb (Full PDB)

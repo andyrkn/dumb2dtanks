@@ -18,6 +18,7 @@ int main()
 	sf::Vector2f largerRectangle = sf::Vector2f(200.0f, 100.0f);
 	sf::Vector2f tankVector = sf::Vector2f(60.0f, 42.0f);
 	sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle),CurrentTankTXT(baserectangle);
+	sf::RectangleShape currentTank(baserectangle);
 	
 	// INITIALIZE TANK TEXTURES 
 
@@ -52,6 +53,7 @@ int main()
 
 	// -- PROGRAM START
 
+	bool currentTankSelectedBool = false;
 	while (MainMenu.isOpen()) {
 		sf::Event evnt;
 		while (MainMenu.pollEvent(evnt))
@@ -69,7 +71,16 @@ int main()
 			if (mouseclickbutton(mousepos, ExitButton) == true)
 				MainMenu.close();
 
-			if (mouseclickbutton(mousepos, SingleplayerButton) == true)
+			for (int st = 0; st < 5; st++)
+				if (mouseclickbutton(mousepos, playerTanksbackup[st]) == true)
+				{
+					currentTank = playerTanksbackup[st];
+					currentTank.setPosition(MainMenu.getSize().x / 2 + 300, 480.0f);
+					currentTankSelectedBool = true;
+					break;
+				}
+
+			if (currentTankSelectedBool==true && mouseclickbutton(mousepos, SingleplayerButton) == true)
 			{
 				MainMenu.setVisible(false);
 
@@ -105,6 +116,8 @@ int main()
 		MainMenu.draw(ExitButton);
 		MainMenu.draw(SingleplayerButton);
 		MainMenu.draw(CurrentTankTXT);
+		if(currentTankSelectedBool)
+			MainMenu.draw(currentTank);
 		for (int i = 0; i < 5; i++)
 			MainMenu.draw(playerTanksbackup[i]);
 		MainMenu.display();
