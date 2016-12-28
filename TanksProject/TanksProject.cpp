@@ -1,4 +1,5 @@
 #include "TankHeader.h"
+#include "Animation.h"
 
 
 int main()
@@ -53,7 +54,12 @@ int main()
 
 	// -- PROGRAM START
 
+	float delta = 0.0f;
+	sf::Clock clock;
 	bool currentTankSelectedBool = false;
+	sf::Texture currentTextureSel;
+
+
 	while (MainMenu.isOpen()) {
 		sf::Event evnt;
 		while (MainMenu.pollEvent(evnt))
@@ -75,6 +81,8 @@ int main()
 				if (mouseclickbutton(mousepos, playerTanksbackup[st]) == true)
 				{
 					currentTank = playerTanksbackup[st];
+					currentTextureSel = playerTankTextures[st];
+
 					currentTank.setPosition(MainMenu.getSize().x / 2 + 300, 480.0f);
 					currentTankSelectedBool = true;
 					break;
@@ -85,26 +93,32 @@ int main()
 				MainMenu.setVisible(false);
 
 				sf::RenderWindow GameWindow(sf::VideoMode(1200, 600), "Tanks", sf::Style::Close);
+				sf::RectangleShape PlayerGameTank = currentTank;
+				Animation animation(&currentTextureSel, 2, 0.2f);
+				PlayerGameTank.setPosition(100.0f, 100.0f);
 
-				playerTanks[0].setPosition(100.0f, 100.0f);
+				bool direction;
 				while (GameWindow.isOpen())
 				{
-
+					delta = clock.restart().asSeconds();
 					sf::Event evnt1;
 					while (GameWindow.pollEvent(evnt1))
 					{
-						if (evnt1.type == evnt1.Closed)
+						if (evnt1.type == evnt1.Closed) {
 							GameWindow.close();
+							GameWindow.clear();
+						}
 					}
 
-					
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { PlayerGameTank.move(-0.1f, 0.0f);  direction = false; }
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))	PlayerGameTank.move(0.0f, 0.1f);
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { PlayerGameTank.move(0.1f, 0.0f); direction = true; }
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))	PlayerGameTank.move(0.0f, -0.1f);
 
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))	playerTanks[0].move(-0.1f, 0.0f);
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))	playerTanks[0].move(0.0f, 0.1f);
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))	playerTanks[0].move(0.1f, 0.0f);
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))	playerTanks[0].move(0.0f, -0.1f);
+					animation.Update(delta, direction);
+					PlayerGameTank.setTextureRect(animation.currentTexture);
 
-					GameWindow.draw(playerTanks[0]);
+					GameWindow.draw(PlayerGameTank);
 					GameWindow.display();
 					GameWindow.clear(sf::Color(230, 230, 230));
 				}
