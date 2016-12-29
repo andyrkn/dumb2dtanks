@@ -18,20 +18,14 @@ int main()
 	sf::Vector2f baserectangle = sf::Vector2f(100.0f, 50.0f);
 	sf::Vector2f largerRectangle = sf::Vector2f(200.0f, 100.0f);
 	sf::Vector2f tankVector = sf::Vector2f(60.0f, 42.0f);
-	sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle),CurrentTankTXT(baserectangle);
+	sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle), CurrentTankTXT(baserectangle);
 	sf::RectangleShape currentTank(baserectangle);
-	
+
 	// INITIALIZE TANK TEXTURES 
 
 	sf::Texture playerTankTextures[5];
-	sf::RectangleShape playerTanksbackup[5],playerTanks[5];
-	inittextures(playerTanksbackup,5,tankVector,playerTankTextures,playerTanks);
-
-	// NOT SURE ???
-
-	sf::RectangleShape Player1(tankVector);
-	Player1.setFillColor(sf::Color(27, 68, 135));
-	Player1.setOrigin(Player1.getSize().x, Player1.getSize().y);
+	sf::RectangleShape playerTanksbackup[5], playerTanks[5];
+	inittextures(playerTanksbackup, 5, tankVector, playerTankTextures, playerTanks);
 
 	//SETTINGS BUTTONS TEXTURE/POSITION
 
@@ -39,7 +33,7 @@ int main()
 	SingleplayerButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	CurrentTankTXT.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
 
-	ExitButton.setPosition(MainMenu.getSize().x/2 - 250.0f, 460.0f);
+	ExitButton.setPosition(MainMenu.getSize().x / 2 - 250.0f, 460.0f);
 	SingleplayerButton.setPosition(MainMenu.getSize().x / 2 - 250, 320.0f);
 	CurrentTankTXT.setPosition(MainMenu.getSize().x / 2 + 200, 480.0f);
 
@@ -70,7 +64,7 @@ int main()
 				MainMenu.close();
 			}
 		}
-		
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 			sf::Vector2i mousepos = sf::Mouse::getPosition(MainMenu);
 
@@ -88,7 +82,7 @@ int main()
 					break;
 				}
 
-			if (currentTankSelectedBool==true && mouseclickbutton(mousepos, SingleplayerButton) == true)
+			if (currentTankSelectedBool == true && mouseclickbutton(mousepos, SingleplayerButton) == true)
 			{
 				MainMenu.setVisible(false);
 
@@ -97,9 +91,10 @@ int main()
 				Animation animation(&currentTextureSel, 2, 0.2f);
 				PlayerGameTank.setPosition(100.0f, 100.0f);
 
-				bool direction;
+				bool direction, didItMove = false;
 				while (GameWindow.isOpen())
 				{
+					didItMove = false;
 					delta = clock.restart().asSeconds();
 					sf::Event evnt1;
 					while (GameWindow.pollEvent(evnt1))
@@ -110,12 +105,13 @@ int main()
 						}
 					}
 
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { PlayerGameTank.move(-0.1f, 0.0f);  direction = false; }
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))	PlayerGameTank.move(0.0f, 0.1f);
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { PlayerGameTank.move(0.1f, 0.0f); direction = true; }
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))	PlayerGameTank.move(0.0f, -0.1f);
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { PlayerGameTank.move(-0.1f, 0.0f);  direction = false; didItMove = true; }
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { PlayerGameTank.move(0.0f, 0.1f); didItMove = true; }
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { PlayerGameTank.move(0.1f, 0.0f); direction = true; didItMove = true; }
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { PlayerGameTank.move(0.0f, -0.1f); didItMove = true; }
 
-					animation.Update(delta, direction);
+					if (didItMove)
+						animation.Update(delta, direction);
 					PlayerGameTank.setTextureRect(animation.currentTexture);
 
 					GameWindow.draw(PlayerGameTank);
@@ -126,11 +122,11 @@ int main()
 			}
 
 		}
-		
+
 		MainMenu.draw(ExitButton);
 		MainMenu.draw(SingleplayerButton);
 		MainMenu.draw(CurrentTankTXT);
-		if(currentTankSelectedBool)
+		if (currentTankSelectedBool)
 			MainMenu.draw(currentTank);
 		for (int i = 0; i < 5; i++)
 			MainMenu.draw(playerTanksbackup[i]);
