@@ -29,7 +29,8 @@ void Animation::Update(float delta, bool right)
 			currentImage.x = 0;
 	}
 
-
+	// intRect( top,left,width,height);
+	// intRekt(x,y,lungimeX,lungimeY);
 	currentTexture.top = 0;
 
 	if (right)

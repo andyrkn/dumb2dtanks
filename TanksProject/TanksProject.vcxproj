@@ -150,10 +150,12 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="TankHeader.h" />
+    <ClInclude Include="TankPlayer.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="TankPlayer.cpp" />
     <ClCompile Include="TanksProject.cpp" />
   </ItemGroup>
   <ItemGroup>
