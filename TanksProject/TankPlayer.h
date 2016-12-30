@@ -1,6 +1,9 @@
 #pragma 
 #include <SFML\Graphics.hpp>
 #include "Animation.h"
+#include <vector>
+#include "Projectiles.h"
+using namespace std;
 
 class TankPlayer
 {
@@ -16,6 +19,9 @@ private:
 	bool direction;
 	bool directionUp=false;
 	bool directionDown=false;
+	vector<Projectiles> PVector;
+	int Frames = 90;
+	int ReloadTime = 0;
 };
 
 

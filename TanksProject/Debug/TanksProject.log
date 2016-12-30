@@ -1,6 +1,5 @@
 ﻿  TankPlayer.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  TanksProject.cpp
+c:\users\andeea\desktop\tanks\tanksrepository\tanksproject\tankplayer.cpp(66): warning C4018: '<': signed/unsigned mismatch
+c:\users\andeea\desktop\tanks\tanksrepository\tanksproject\tankplayer.cpp(75): warning C4018: '<': signed/unsigned mismatch
   TanksProject.vcxproj -> C:\Users\Andeea\Desktop\Tanks\TanksRepository\Debug\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Andeea\Desktop\Tanks\TanksRepository\Debug\TanksProject.pdb (Full PDB)
