@@ -14,7 +14,8 @@ private:
 	sf::RectangleShape tankBody;
 	Animation animation;
 	bool direction;
-
+	bool directionUp;
+	bool directionDown;
 };
 
 

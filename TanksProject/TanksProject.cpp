@@ -1,5 +1,5 @@
 #include "TankHeader.h"
-#include "Animation.h"
+#include "TankPlayer.h"
 
 
 int main()
@@ -52,7 +52,7 @@ int main()
 	sf::Clock clock;
 	bool currentTankSelectedBool = false;
 	sf::Texture currentTextureSel;
-
+		
 
 	while (MainMenu.isOpen()) {
 		sf::Event evnt;
@@ -88,13 +88,10 @@ int main()
 
 				sf::RenderWindow GameWindow(sf::VideoMode(1200, 600), "Tanks", sf::Style::Close);
 				sf::RectangleShape PlayerGameTank = currentTank;
-				Animation animation(&currentTextureSel, 2, 0.2f);
 				PlayerGameTank.setPosition(100.0f, 100.0f);
-
-				bool direction, didItMove = false;
+				TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f);
 				while (GameWindow.isOpen())
 				{
-					didItMove = false;
 					delta = clock.restart().asSeconds();
 					sf::Event evnt1;
 					while (GameWindow.pollEvent(evnt1))
@@ -104,17 +101,9 @@ int main()
 							GameWindow.clear();
 						}
 					}
+					player1.Update(delta);
+					player1.draw(GameWindow);
 
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { PlayerGameTank.move(-0.1f, 0.0f);  direction = false; didItMove = true; }
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { PlayerGameTank.move(0.0f, 0.1f); didItMove = true; }
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { PlayerGameTank.move(0.1f, 0.0f); direction = true; didItMove = true; }
-					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { PlayerGameTank.move(0.0f, -0.1f); didItMove = true; }
-
-					if (didItMove)
-						animation.Update(delta, direction);
-					PlayerGameTank.setTextureRect(animation.currentTexture);
-
-					GameWindow.draw(PlayerGameTank);
 					GameWindow.display();
 					GameWindow.clear(sf::Color(230, 230, 230));
 				}
