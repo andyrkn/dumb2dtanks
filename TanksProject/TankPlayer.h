@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include <vector>
 #include "Projectiles.h"
+#include "Maps.h"
 using namespace std;
 
 class TankPlayer
@@ -10,8 +11,9 @@ class TankPlayer
 public:
 	TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime);
 	~TankPlayer();
-	void Update(float delta);
+	void Update(float delta, Maps map);
 	void draw(sf::RenderWindow& window);
+	bool checkColission(Maps map);
 	
 private:
 	sf::RectangleShape tankBody;

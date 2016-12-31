@@ -10,6 +10,7 @@ public:
 	int getLeft();
 	int getTop();
 	int getBottom();
+	sf::Vector2f getPos();
 
 	void fire(int speed);
 	void draw(sf::RenderWindow &window);

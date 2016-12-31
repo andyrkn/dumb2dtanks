@@ -35,6 +35,11 @@ int Projectiles::getBottom()
 	return this->projectile.getPosition().y + this->projectile.getSize().y;
 }
 
+sf::Vector2f Projectiles::getPos()
+{
+	return this->projectile.getPosition();
+}
+
 void Projectiles::fire(int speed)
 {
 	if(this->projectile.getPosition().x<1300 && this->projectile.getPosition().x>-100

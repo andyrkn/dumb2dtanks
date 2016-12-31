@@ -1,11 +1,11 @@
 #include "TankPlayer.h"
 
 
-
 TankPlayer::TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime) :
 	animation(texture,imageCount, switchTime)
 {
 	this->tankBody = tankBody;
+	this->tankBody.setOrigin(sf::Vector2f(this->tankBody.getSize().x / 2, this->tankBody.getSize().y / 2));
 }
 
 
@@ -13,15 +13,38 @@ TankPlayer::~TankPlayer()
 {
 }
 
-void TankPlayer::Update(float delta)
+void TankPlayer::Update(float delta, Maps map)
 {
 	this->tankBody.setRotation(0);
 
-	bool didItMove=false;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-0.1f, 0.0f);  direction = false; didItMove = true; directionDown = directionUp = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, 0.1f); didItMove = true; directionDown = true; directionUp = false; direction = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(0.1f, 0.0f); direction = true; didItMove = true; directionDown = directionUp = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -0.1f); didItMove = true; directionUp = true; directionDown = false; direction = false; }
+	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-0.1f, 0.0f);  leftOnly = true; direction = false; didItMove = true; directionDown = directionUp = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, 0.1f); downOnly = true; didItMove = true; directionDown = true; directionUp = false; direction = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(0.1f, 0.0f); rightOnly = true; direction = true; didItMove = true; directionDown = directionUp = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -0.1f); upOnly = true; didItMove = true; directionUp = true; directionDown = false; direction = false; }
+
+	if (checkColission(map))
+	{
+		if (rightOnly && upOnly)
+			this->tankBody.move(-0.1f, 0.1f);
+		else if(rightOnly && downOnly)
+			this->tankBody.move(-0.1f, -0.1f);
+		else if(leftOnly && downOnly)
+			this->tankBody.move(0.1f, -0.1f);
+		else if(leftOnly && upOnly)
+			this->tankBody.move(0.1f, 0.1f);
+		else
+		{
+			if (upOnly)
+				this->tankBody.move(0.0f, 0.1f);
+			if (downOnly)
+				this->tankBody.move(0.0f, -0.1f);
+			if (rightOnly)
+				this->tankBody.move(-0.1f, 0.0f);
+			if (leftOnly)
+				this->tankBody.move(0.1f, 0.0f);
+		}	
+	}
 
 	if (didItMove) {
 		animation.Update(delta, direction);
@@ -73,4 +96,33 @@ void TankPlayer::draw(sf::RenderWindow& window)
 
 	for (int i = 0; i < PVector.size(); i++)
 		PVector[i].draw(window);
+}
+
+bool TankPlayer::checkColission(Maps map)
+{
+	float deltaX, deltaY, intersectX, intersectY;
+	sf::RectangleShape object;
+
+	for (int j = 0; j < PVector.size(); j++)
+		for (int k = 0; k < map.getNoWalls(); k++)
+		{
+			object = map.getWall(k);
+			if (PVector[j].getPos().x >= object.getPosition().x
+				&& PVector[j].getPos().x <= (object.getPosition().x + object.getSize().x))
+				if (PVector[j].getPos().y >= object.getPosition().y
+					&& PVector[j].getPos().y <= (object.getPosition().y + object.getSize().y))
+					PVector[j].fire(2000);
+		}
+
+	for (int i = 0; i < map.getNoWalls(); i++)
+	{
+		sf::Vector2f wallPosition = map.getWall(i).getPosition();
+		deltaX = abs(wallPosition.x + map.getWall(i).getSize().x / 2 - this->tankBody.getPosition().x);
+		deltaY = abs(wallPosition.y + map.getWall(i).getSize().y / 2 - this->tankBody.getPosition().y);
+		intersectX = deltaX - (map.getWall(i).getSize().x / 2 + tankBody.getSize().x / 2);
+		intersectY = deltaY - (map.getWall(i).getSize().y / 2 + tankBody.getSize().y / 2);
+		if (intersectX < 0.0f && intersectY < 0.0f)
+			return true;
+	}
+	return false;
 }

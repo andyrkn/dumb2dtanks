@@ -1,5 +1,6 @@
 #include "TankHeader.h"
 #include "TankPlayer.h"
+#include "Maps.h"
 
 
 int main()
@@ -90,6 +91,8 @@ int main()
 				sf::RectangleShape PlayerGameTank = currentTank;
 				PlayerGameTank.setPosition(100.0f, 100.0f);
 				TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f);
+				Maps Map1;
+				Map1.MapInitialize1();
 				while (GameWindow.isOpen())
 				{
 					delta = clock.restart().asSeconds();
@@ -101,9 +104,9 @@ int main()
 							GameWindow.clear();
 						}
 					}
-					player1.Update(delta);
+					player1.Update(delta, Map1);
 					player1.draw(GameWindow);
-
+					Map1.draw(GameWindow);
 					GameWindow.display();
 					GameWindow.clear(sf::Color(230, 230, 230));
 				}

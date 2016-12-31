@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Maps.h" />
     <ClInclude Include="Projectiles.h" />
     <ClInclude Include="TankHeader.h" />
     <ClInclude Include="TankPlayer.h" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Maps.cpp" />
     <ClCompile Include="Projectiles.cpp" />
     <ClCompile Include="TankPlayer.cpp" />
     <ClCompile Include="TanksProject.cpp" />
