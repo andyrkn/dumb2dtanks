@@ -24,9 +24,9 @@ int main()
 
 	// INITIALIZE TANK TEXTURES 
 
-	sf::Texture playerTankTextures[5];
-	sf::RectangleShape playerTanksbackup[5], playerTanks[5];
-	inittextures(playerTanksbackup, 5, tankVector, playerTankTextures, playerTanks);
+	sf::Texture playerTankTextures[5], mapsTextures[3];
+	sf::RectangleShape playerTanksbackup[5], playerTanks[5], MAPS[3];
+	inittextures(playerTanksbackup, 5, tankVector, playerTankTextures, playerTanks, MAPS, mapsTextures, 3);
 
 	//SETTINGS BUTTONS TEXTURE/POSITION
 
@@ -51,9 +51,9 @@ int main()
 
 	float delta = 0.0f;
 	sf::Clock clock;
-	bool currentTankSelectedBool = false;
+	bool currentTankSelectedBool = false, mapSelected=false;
 	sf::Texture currentTextureSel;
-		
+	Maps Map;
 
 	while (MainMenu.isOpen()) {
 		sf::Event evnt;
@@ -82,6 +82,15 @@ int main()
 					currentTankSelectedBool = true;
 					break;
 				}
+			for (int i = 0; i < 3; i++)
+				if (mouseclickbutton(mousepos, MAPS[i]) == true)
+				{
+					mapSelected = true;
+					Map.selectMap(i);
+					break;
+				}
+			if (!mapSelected)
+				Map.selectMap(100);
 
 			if (currentTankSelectedBool == true && mouseclickbutton(mousepos, SingleplayerButton) == true)
 			{
@@ -91,8 +100,6 @@ int main()
 				sf::RectangleShape PlayerGameTank = currentTank;
 				PlayerGameTank.setPosition(100.0f, 100.0f);
 				TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f);
-				Maps Map1;
-				Map1.MapInitialize1();
 				while (GameWindow.isOpen())
 				{
 					delta = clock.restart().asSeconds();
@@ -104,9 +111,9 @@ int main()
 							GameWindow.clear();
 						}
 					}
-					player1.Update(delta, Map1);
+					player1.Update(delta, Map);
 					player1.draw(GameWindow);
-					Map1.draw(GameWindow);
+					Map.draw(GameWindow);
 					GameWindow.display();
 					GameWindow.clear(sf::Color(230, 230, 230));
 				}
@@ -122,6 +129,8 @@ int main()
 			MainMenu.draw(currentTank);
 		for (int i = 0; i < 5; i++)
 			MainMenu.draw(playerTanksbackup[i]);
+		for (int j = 0; j < 3; j++)
+			MainMenu.draw(MAPS[j]);
 		MainMenu.display();
 		MainMenu.clear(sf::Color(132, 137, 201));
 	}

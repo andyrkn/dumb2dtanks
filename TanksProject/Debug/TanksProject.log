@@ -1,23 +1,9 @@
-﻿Build started 31.12.2016 21:24:46.
+﻿Build started 02.01.2017 19:48:45.
      1>Project "C:\Users\Mihai\Documents\TanksRepository\TanksProject\TanksProject.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\SFML-2.4.1\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Projectiles.cpp TankPlayer.cpp TanksProject.cpp
-         TankPlayer.cpp
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\tankplayer.cpp(88): warning C4018: '<': signed/unsigned mismatch
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\tankplayer.cpp(97): warning C4018: '<': signed/unsigned mismatch
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\tankplayer.cpp(106): warning C4018: '<': signed/unsigned mismatch
-         Projectiles.cpp
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(20): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(25): warning C4244: 'return': conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(30): warning C4244: 'return': conversion from 'const float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(35): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\projectiles.cpp(51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         TanksProject.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\SFML-2.4.1\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Maps.cpp
+         Maps.cpp
+     1>c:\users\mihai\documents\tanksrepository\tanksproject\maps.cpp(56): warning C4018: '<': signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mihai\Documents\TanksRepository\Debug\TanksProject.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML-2.4.1\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Mihai\Documents\TanksRepository\Debug\TanksProject.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mihai\Documents\TanksRepository\Debug\TanksProject.lib" /MACHINE:X86 Debug\Animation.obj
          Debug\Maps.obj
@@ -29,4 +15,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.17
+Time Elapsed 00:00:00.94
