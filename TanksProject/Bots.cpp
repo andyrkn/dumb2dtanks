@@ -27,7 +27,7 @@ Bots::~Bots()
 
 }
 
-void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[])
+void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
 {
 	if (tankHP) {
 
@@ -39,7 +39,7 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 			{	leftOnly = true; tankBody.move(-0.1f, 0.0f);	}
 		
 
-		if (checkColission(map,PlayerPos,BotsPos))
+		if (checkColission(map,PlayerPos,BotsPos, ib, isDead))
 		{
 			if (upOnly) {
 				this->tankBody.move(0.0f, 0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }
@@ -98,7 +98,7 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 
 
 
-void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[])
+void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
 {
 	if (tankHP) {
 
@@ -106,7 +106,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 }
 
 
-void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[])
+void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
 {
 	if (tankHP) {
 
@@ -125,13 +125,17 @@ void Bots::draw(sf::RenderWindow & window)
 }
 
 
-bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[])
+bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
 {
 	float deltaX, deltaY, intersectX, intersectY;
 	sf::RectangleShape object;
+	int k;
+	bool gone;
 
 	for (int j = 0; j < PVector.size(); j++)
-		for (int k = 0; k < map.getNoWalls(); k++)
+	{
+		gone = false;
+		for (k = 0; k < map.getNoWalls(); k++)
 		{
 			object = map.getWall(k);
 			if (PVector[j].getPos().x >= object.getPosition().x
@@ -140,10 +144,18 @@ bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[
 					&& PVector[j].getPos().y <= (object.getPosition().y + object.getSize().y))
 				{
 					PVector.erase(PVector.begin() + j);
+					gone = true;
 					break;
 				}
 		}
-
+		if(!gone)
+		if (PVector[j].getPos().x >= PlayerPos.x - 30.0f && PVector[j].getPos().x <= PlayerPos.x + 30.0f)
+			if (PVector[j].getPos().y >= PlayerPos.y - 21.0f && PVector[j].getPos().y <= PlayerPos.y + 21.0f)
+			{
+				isDead--;
+				PVector.erase(PVector.begin() + j);
+			}
+	}
 
 	int i;
 	for ( i = 0; i < map.getNoWalls(); i++)
@@ -156,11 +168,10 @@ bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[
 		if (intersectX < 0.0f && intersectY < 0.0f)
 			return true;
 	}
-
+	float auxX = this->tankBody.getPosition().x;
+	float auxY = this->tankBody.getPosition().y;
 	for (i = 0; i < 3; i++)
-		//if(BotsPos[i] != this->tankBody.getPosition() ){
-		if (BotsPos[i].x != this->tankBody.getPosition().x &&
-			BotsPos[i].y != this->tankBody.getPosition().y){
+		if (ib != i){
 		deltaX = abs(BotsPos[i].x - this->tankBody.getPosition().x);
 		deltaY = abs(BotsPos[i].y - this->tankBody.getPosition().y);
 		intersectX = deltaX - 60.0f;
@@ -168,6 +179,12 @@ bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[
 		if (intersectX < 0.0f && intersectY < 0.0f)
 			return true;
 		}
+	deltaX = abs(this->tankBody.getPosition().x - PlayerPos.x);
+	deltaY = abs(this->tankBody.getPosition().y - PlayerPos.y);
+	intersectX = deltaX - 60.0f;
+	intersectY = deltaY - 42.0f;
+	if (intersectX < 0.0f && intersectY < 0.0f)
+		return true;
 
 	return false;
 }
@@ -206,4 +223,9 @@ void Bots::setdirection(bool  upOnly, bool  downOnly, bool  rightOnly, bool  lef
 sf::Vector2f Bots::GetPosition()
 {
 	return this->tankBody.getPosition();
+}
+
+void Bots::changePos(float delta)
+{
+	this->tankBody.move(0.0f, delta);
 }

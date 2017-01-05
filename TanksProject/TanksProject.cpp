@@ -105,34 +105,52 @@ int main()
 				TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f);
 
 				int used[] = { 0,0,0,0,0,0,0,0 };
-
+				int botLife[4];
+				bool hasBeenKilled[] = { false, false, false, false}, EndOfGame;
+				sf::Vector2f botPos[4];
 				Bots bot[4];
 				for (int bots = 0; bots < 3; bots++)
 					bot[bots] = createbot(playerTanksbackup, playerTankTextures,used,ct);
 
 				while (GameWindow.isOpen())
 				{
-					int ib;
+					int ib, tankLife;
 					delta = clock.restart().asSeconds();
 					sf::Event evnt1;
 
 					while (GameWindow.pollEvent(evnt1))
 					{
-						if (evnt1.type == evnt1.Closed) {
+						if (evnt1.type == evnt1.Closed || EndOfGame || !player1.tankHP) {
 							GameWindow.close();
 							GameWindow.clear();
 						}
 					}
 
-					sf::Vector2f botPos[4];
-					player1.Update(delta, Map);
-				
 					for (ib = 0; ib < 3; ib++)
+					{
 						botPos[ib] = bot[ib].GetPosition();
+						botLife[ib] = bot[ib].tankHP;
+					}
 
-					for (ib = 0; ib < 3; ib++) {
-						bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos);
-						bot[ib].draw(GameWindow);
+					player1.Update(delta, Map, botPos, botLife);
+					EndOfGame = true;
+					for (ib = 0; ib < 3; ib++)
+					{
+						tankLife = player1.tankHP;
+						bot[ib].tankHP = botLife[ib];
+						if (bot[ib].tankHP)
+						{
+							bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+							bot[ib].draw(GameWindow);
+							EndOfGame = false;
+						}
+						else if (hasBeenKilled[ib] == false)
+						{
+							bot[ib].changePos(2000.0f);
+							hasBeenKilled[ib] = true;
+						}
+						player1.tankHP = tankLife;
+						if (!player1.tankHP)GameWindow.close();
 					}
 
 					player1.draw(GameWindow);
