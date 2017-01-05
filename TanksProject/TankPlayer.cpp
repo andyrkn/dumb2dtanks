@@ -111,7 +111,10 @@ bool TankPlayer::checkColission(Maps map)
 				&& PVector[j].getPos().x <= (object.getPosition().x + object.getSize().x))
 				if (PVector[j].getPos().y >= object.getPosition().y
 					&& PVector[j].getPos().y <= (object.getPosition().y + object.getSize().y))
-					PVector[j].fire(2000);
+				{
+					PVector.erase(PVector.begin() + j);
+					break;
+				}
 		}
 
 	for (int i = 0; i < map.getNoWalls(); i++)
