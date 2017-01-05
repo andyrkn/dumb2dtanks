@@ -3,6 +3,7 @@
 class Animation
 {
 public:
+	Animation();
 	Animation(sf::Texture* texture, int imageCount, float switchTime);
 	~Animation();
 	sf::IntRect currentTexture;

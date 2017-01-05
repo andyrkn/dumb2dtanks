@@ -14,13 +14,13 @@ public:
 	void Update(float delta, Maps map);
 	void draw(sf::RenderWindow& window);
 	bool checkColission(Maps map);
+
+	sf::Vector2f GetPosition();
 	
 private:
 	sf::RectangleShape tankBody;
 	Animation animation;
 	bool direction;
-	bool directionUp=false;
-	bool directionDown=false;
 	vector<Projectiles> PVector;
 	int Frames = 90;
 	int ReloadTime = 0;

@@ -1,5 +1,7 @@
 #include<SFML\Graphics.hpp>
 #include<Windows.h>
+#include"Bots.h"
+#include<random>
 #define ToF(a) static_cast<float>(a)
 
 void inittextures(sf::RectangleShape tanks[], int nr, sf::Vector2f tanksize, sf::Texture textures[],sf::RectangleShape maintanks[], sf::RectangleShape Maps[], sf::Texture mapsTextures[], int noMaps)
@@ -45,5 +47,19 @@ bool mouseclickbutton(sf::Vector2i MousePos, sf::RectangleShape button)
 		if (ToF(MousePos.y) <= (buttonposi.y + buttonsize.y / 2) && ToF(MousePos.y) >= (buttonposi.y - buttonsize.y / 2))
 			return true;
 	return false;
+}
+
+Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int ct)
+{
+	int x;
+
+	while (true) {
+		x = rand() % 5 + 1;
+		if (used[x] == 0 && (x-1)!=ct) {
+			Bots b(bodys[x - 1], &textures[x - 1], 2, 0.2f);
+			used[x] = 1;
+			return b;
+		}
+	}
 }
 

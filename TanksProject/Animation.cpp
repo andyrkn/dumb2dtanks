@@ -2,6 +2,10 @@
 
 
 
+Animation::Animation()
+{
+}
+
 Animation::Animation(sf::Texture* texture, int imageCount, float switchTime)
 {
 	this->imageCount = imageCount;

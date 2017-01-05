@@ -6,6 +6,7 @@ TankPlayer::TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int im
 {
 	this->tankBody = tankBody;
 	this->tankBody.setOrigin(sf::Vector2f(this->tankBody.getSize().x / 2, this->tankBody.getSize().y / 2));
+
 }
 
 
@@ -18,10 +19,10 @@ void TankPlayer::Update(float delta, Maps map)
 	this->tankBody.setRotation(0);
 
 	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-0.1f, 0.0f);  leftOnly = true; direction = false; didItMove = true; directionDown = directionUp = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, 0.1f); downOnly = true; didItMove = true; directionDown = true; directionUp = false; direction = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(0.1f, 0.0f); rightOnly = true; direction = true; didItMove = true; directionDown = directionUp = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -0.1f); upOnly = true; didItMove = true; directionUp = true; directionDown = false; direction = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-0.1f, 0.0f);  leftOnly = true; direction = false; didItMove = true; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, 0.1f); downOnly = true; didItMove = true;direction = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(0.1f, 0.0f); rightOnly = true; direction = true; didItMove = true; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -0.1f); upOnly = true; didItMove = true; direction = false; }
 
 	if (checkColission(map))
 	{
@@ -51,15 +52,15 @@ void TankPlayer::Update(float delta, Maps map)
 		this->tankBody.setTextureRect(animation.currentTexture);
 	}
 
-	if (directionUp)
+	if (upOnly)
 		this->tankBody.setRotation(90);
-	if (directionDown)
+	if (downOnly)
 		this->tankBody.setRotation(-90);
 	if (direction)
 	{
-		if (directionUp)
+		if (upOnly)
 			this->tankBody.setRotation(-90);
-		if (directionDown)
+		if (downOnly)
 			this->tankBody.setRotation(90);
 	}
 
@@ -71,8 +72,8 @@ void TankPlayer::Update(float delta, Maps map)
 		ReloadTime = 0;
 		Frames = 0;
 		int dir = 0;
-		if (directionUp) dir = 4;
-		if (directionDown) dir = 2;
+		if (upOnly) dir = 4;
+		if (downOnly) dir = 2;
 		if (direction && dir == 0) dir = 1;
 		if (!direction && dir == 0) dir = 3;
 
@@ -87,7 +88,6 @@ void TankPlayer::Update(float delta, Maps map)
 
 	for (int i = 0; i < PVector.size(); i++)
 		PVector[i].fire(2);
-
 }
 
 void TankPlayer::draw(sf::RenderWindow& window)
@@ -128,4 +128,9 @@ bool TankPlayer::checkColission(Maps map)
 			return true;
 	}
 	return false;
+}
+
+sf::Vector2f TankPlayer::GetPosition()
+{
+	return this->tankBody.getPosition();
 }

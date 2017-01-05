@@ -1,6 +1,7 @@
 #include "TankHeader.h"
 #include "TankPlayer.h"
 #include "Maps.h"
+#include "Bots.h"
 
 
 int main()
@@ -54,7 +55,7 @@ int main()
 	bool currentTankSelectedBool = false, mapSelected=false;
 	sf::Texture currentTextureSel;
 	Maps Map;
-
+	int ct;
 	while (MainMenu.isOpen()) {
 		sf::Event evnt;
 		while (MainMenu.pollEvent(evnt))
@@ -73,22 +74,22 @@ int main()
 				MainMenu.close();
 
 			for (int st = 0; st < 5; st++)
-				if (mouseclickbutton(mousepos, playerTanksbackup[st]) == true)
-				{
+				if (mouseclickbutton(mousepos, playerTanksbackup[st]) == true)	{
 					currentTank = playerTanksbackup[st];
+					ct = st;
 					currentTextureSel = playerTankTextures[st];
-
 					currentTank.setPosition(MainMenu.getSize().x / 2 + 300, 480.0f);
 					currentTankSelectedBool = true;
 					break;
 				}
+
 			for (int i = 0; i < 3; i++)
-				if (mouseclickbutton(mousepos, MAPS[i]) == true)
-				{
+				if (mouseclickbutton(mousepos, MAPS[i]) == true)	{
 					mapSelected = true;
 					Map.selectMap(i);
 					break;
 				}
+
 			if (!mapSelected)
 				Map.selectMap(100);
 
@@ -98,12 +99,23 @@ int main()
 
 				sf::RenderWindow GameWindow(sf::VideoMode(1200, 600), "Tanks", sf::Style::Close);
 				sf::RectangleShape PlayerGameTank = currentTank;
+
+
 				PlayerGameTank.setPosition(100.0f, 100.0f);
 				TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f);
+
+				int used[] = { 0,0,0,0,0,0,0,0 };
+
+				Bots bot[4];
+				for (int bots = 0; bots < 3; bots++)
+					bot[bots] = createbot(playerTanksbackup, playerTankTextures,used,ct);
+
 				while (GameWindow.isOpen())
 				{
+					int ib;
 					delta = clock.restart().asSeconds();
 					sf::Event evnt1;
+
 					while (GameWindow.pollEvent(evnt1))
 					{
 						if (evnt1.type == evnt1.Closed) {
@@ -111,7 +123,18 @@ int main()
 							GameWindow.clear();
 						}
 					}
+
+					sf::Vector2f botPos[4];
 					player1.Update(delta, Map);
+				
+					for (ib = 0; ib < 3; ib++)
+						botPos[ib] = bot[ib].GetPosition();
+
+					for (ib = 0; ib < 3; ib++) {
+						bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos);
+						bot[ib].draw(GameWindow);
+					}
+
 					player1.draw(GameWindow);
 					Map.draw(GameWindow);
 					GameWindow.display();
