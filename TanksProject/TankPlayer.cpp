@@ -132,7 +132,16 @@ bool TankPlayer::checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]
 				}
 		}
 	}
-
+	for (k = 0; k < 3; k++)
+		if(botLife[k])
+	{
+		deltaX = abs(this->tankBody.getPosition().x - botPos[k].x);
+		deltaY = abs(this->tankBody.getPosition().y - botPos[k].y);
+		intersectX = deltaX - 60.0f;
+		intersectY = deltaY - 42.0f;
+		if (intersectX < 0.0f && intersectY < 0.0f)
+			return true;
+	}
 	for (int i = 0; i < map.getNoWalls(); i++)
 	{
 		sf::Vector2f wallPosition = map.getWall(i).getPosition();

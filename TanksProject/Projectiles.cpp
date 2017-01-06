@@ -42,15 +42,10 @@ sf::Vector2f Projectiles::getPos()
 
 void Projectiles::fire(int speed)
 {
-	if(this->projectile.getPosition().x<1300 && this->projectile.getPosition().x>-100
-		&& this->projectile.getPosition().y<1300 && this->projectile.getPosition().y > -100)
-		{
 		if(this->dir == 1) this->projectile.move(speed, 0.0f);
-		if(this->dir == 2)this->projectile.move(0.0f, speed);
+		if(this->dir == 2) this->projectile.move(0.0f, speed);
 		if(this->dir == 3)this->projectile.move(-speed, 0.0f);
 		if(this->dir == 4)this->projectile.move(0.0f, -speed);
-		}
-
 }
 
 void Projectiles::draw(sf::RenderWindow & window)

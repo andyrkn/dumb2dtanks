@@ -68,12 +68,10 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 				this->tankBody.setRotation(90);
 		}
 
+		Frames++;
 
-		Frames++; ReloadTime++;
-
-		if (Frames>360)
+		if (Frames>300)
 		{
-			ReloadTime = 0;
 			Frames = 0;
 			int dir = 0;
 			if (upOnly) dir = 4;
@@ -85,14 +83,8 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 			PVector.push_back(bullet);
 		}
 
-		if (ReloadTime > 900) {
-			PVector.clear();
-			ReloadTime = 0;
-		}
-
 		for (int i = 0; i < PVector.size(); i++)
 			PVector[i].fire(2);
-
 	}
 }
 

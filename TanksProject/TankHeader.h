@@ -52,7 +52,6 @@ bool mouseclickbutton(sf::Vector2i MousePos, sf::RectangleShape button)
 Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int ct)
 {
 	int x;
-
 	while (true) {
 		x = rand() % 5 + 1;
 		if (used[x] == 0 && (x-1)!=ct) {
