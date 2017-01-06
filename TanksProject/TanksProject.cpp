@@ -3,9 +3,9 @@
 #include "Maps.h"
 #include "Bots.h"
 
-
 int main()
 {
+	
 	// RENDER WINDOWS 
 
 	sf::RenderWindow MainMenu(sf::VideoMode(1000, 600), "Tanks Menu", sf::Style::Close);

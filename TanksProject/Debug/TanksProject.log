@@ -1,7 +1,6 @@
-﻿  Bots.cpp
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(92): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(180): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(198): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(211): warning C4018: '<': signed/unsigned mismatch
+﻿  TankPlayer.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(88): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(96): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(107): warning C4018: '<': signed/unsigned mismatch
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)

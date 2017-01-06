@@ -36,6 +36,9 @@
     <ClInclude Include="Bots.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TanksProject.cpp">

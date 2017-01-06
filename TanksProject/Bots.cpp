@@ -33,10 +33,10 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
 
-		if (startUp)   {	upOnly    = true; tankBody.move(0.0f, -0.1f);   }	else
-		if (startDown) {	downOnly  = true; tankBody.move(0.0f, 0.1f);    }	else
-		if (direction) {	rightOnly = true; tankBody.move(0.1f, 0.0f);	}	else
-			{	leftOnly = true; tankBody.move(-0.1f, 0.0f);	}
+		if (startUp)   {	upOnly    = true; tankBody.move(0.0f, -0.15f);   }	else
+		if (startDown) {	downOnly  = true; tankBody.move(0.0f, 0.15f);    }	else
+		if (direction) {	rightOnly = true; tankBody.move(0.15f, 0.0f);	}	else
+			{	leftOnly = true; tankBody.move(-0.15f, 0.0f);	}
 //==========	
 
 		float botX = this->tankBody.getPosition().x;
@@ -59,13 +59,13 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 		if (checkColission(map,PlayerPos,BotsPos, ib, isDead))
 		{
 			if (upOnly) {
-				this->tankBody.move(0.0f, 0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }
+				this->tankBody.move(0.0f, 0.15f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }
 			if (downOnly) {
-				this->tankBody.move(0.0f, -0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }
+				this->tankBody.move(0.0f, -0.15f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }
 			if (rightOnly) {
-				this->tankBody.move(-0.1f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);	}
+				this->tankBody.move(-0.15f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);	}
 			if (leftOnly) {
-				this->tankBody.move(0.1f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }				
+				this->tankBody.move(0.15f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly); }				
 		}
 
 		animation.Update(delta, direction);
@@ -101,15 +101,10 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 	if (tankHP) {
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
 
-		if (startUp) { upOnly = true; tankBody.move(0.0f, -0.1f); }
-		else
-			if (startDown) { downOnly = true; tankBody.move(0.0f, 0.1f); }
-			else
-				if (direction) { rightOnly = true; tankBody.move(0.1f, 0.0f); }
-				else
-				{
-					leftOnly = true; tankBody.move(-0.1f, 0.0f);
-				}
+		if (startUp) { upOnly = true; tankBody.move(0.0f, -0.15f); }else
+		if (startDown) { downOnly = true; tankBody.move(0.0f, 0.15f); }	else
+		if (direction) { rightOnly = true; tankBody.move(0.15f, 0.0f); }else
+			{	leftOnly = true; tankBody.move(-0.15f, 0.0f);	}
 
 		Frames++; ReloadTime++;
 		//===================
@@ -142,16 +137,16 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 		if (checkColission(map, PlayerPos, BotsPos, ib, isDead))
 		{
 			if (upOnly) {
-				this->tankBody.move(0.0f, 0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+				this->tankBody.move(0.0f, 0.15f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
 			}
 			if (downOnly) {
-				this->tankBody.move(0.0f, -0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+				this->tankBody.move(0.0f, -0.15f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
 			}
 			if (rightOnly) {
-				this->tankBody.move(-0.1f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+				this->tankBody.move(-0.15f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
 			}
 			if (leftOnly) {
-				this->tankBody.move(0.1f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+				this->tankBody.move(0.15f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
 			}
 		}
 

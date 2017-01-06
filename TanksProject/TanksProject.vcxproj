@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bots.h" />
+    <ClInclude Include="ProjectileRes.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="Projectiles.h" />
     <ClInclude Include="TankHeader.h" />

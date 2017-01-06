@@ -19,31 +19,31 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 	this->tankBody.setRotation(0);
 
 	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-0.1f, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, 0.1f); directionUp = false; directionDown = true; downOnly = true; didItMove = true;direction = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(0.1f, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -0.1f); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-0.2f, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, 0.2f); directionUp = false; directionDown = true; downOnly = true; didItMove = true;direction = false; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(0.2f, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -0.2f); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
 
 	if (checkColission(map, botPos, botLife))
 	{
 		if (rightOnly && upOnly)
-			this->tankBody.move(-0.1f, 0.1f);
+			this->tankBody.move(-0.2f, 0.2f);
 		else if(rightOnly && downOnly)
-			this->tankBody.move(-0.1f, -0.1f);
+			this->tankBody.move(-0.2f, -0.2f);
 		else if(leftOnly && downOnly)
-			this->tankBody.move(0.1f, -0.1f);
+			this->tankBody.move(0.2f, -0.2f);
 		else if(leftOnly && upOnly)
-			this->tankBody.move(0.1f, 0.1f);
+			this->tankBody.move(0.2f, 0.2f);
 		else
 		{
 			if (upOnly)
-				this->tankBody.move(0.0f, 0.1f);
+				this->tankBody.move(0.0f, 0.2f);
 			if (downOnly)
-				this->tankBody.move(0.0f, -0.1f);
+				this->tankBody.move(0.0f, -0.2f);
 			if (rightOnly)
-				this->tankBody.move(-0.1f, 0.0f);
+				this->tankBody.move(-0.2f, 0.0f);
 			if (leftOnly)
-				this->tankBody.move(0.1f, 0.0f);
+				this->tankBody.move(0.2f, 0.0f);
 		}	
 	}
 
