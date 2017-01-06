@@ -37,8 +37,25 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 		if (startDown) {	downOnly  = true; tankBody.move(0.0f, 0.1f);    }	else
 		if (direction) {	rightOnly = true; tankBody.move(0.1f, 0.0f);	}	else
 			{	leftOnly = true; tankBody.move(-0.1f, 0.0f);	}
-		
+//==========	
 
+		float botX = this->tankBody.getPosition().x;
+		float botY = this->tankBody.getPosition().y;
+
+		if (direction && !upOnly && !downOnly) 
+			if (PlayerPos.x > botX && PlayerPos.y - 30 < botY && PlayerPos.y + 30 > botY && Frames > 450)
+				createbullet(upOnly, downOnly);
+		if (!direction && !upOnly && !downOnly)
+			if (PlayerPos.x < botX && PlayerPos.y - 30 < botY && PlayerPos.y + 30 > botY && Frames > 450)
+				createbullet(upOnly, downOnly);
+		if (upOnly)
+			if (PlayerPos.y < botY && PlayerPos.x - 20 < botX && PlayerPos.x + 20 > botX && Frames > 450)
+				createbullet(upOnly, downOnly);
+		if (downOnly)
+			if (PlayerPos.y > botY && PlayerPos.x - 20 < botX && PlayerPos.x + 20 > botX && Frames > 450)
+				createbullet(upOnly, downOnly);
+
+//===========
 		if (checkColission(map,PlayerPos,BotsPos, ib, isDead))
 		{
 			if (upOnly) {
@@ -69,20 +86,9 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 		}
 
 		Frames++;
+		ReloadTime++;
 
-		if (Frames>300)
-		{
-			Frames = 0;
-			int dir = 0;
-			if (upOnly) dir = 4;
-			if (downOnly) dir = 2;
-			if (direction && dir == 0) dir = 1;
-			if (!direction && dir == 0) dir = 3;
-
-			Projectiles bullet(this->tankBody.getPosition(), dir);
-			PVector.push_back(bullet);
-		}
-
+		if (ReloadTime > 900) PVector.clear();
 		for (int i = 0; i < PVector.size(); i++)
 			PVector[i].fire(2);
 	}
@@ -108,41 +114,30 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 		Frames++; ReloadTime++;
 		//===================
 
-		float virtualX = 0;
-		float xPoint = this->tankBody.getPosition().x;
-		
-		while (virtualX < 1200) {
-			if (CheckAim(PlayerPos, sf::Vector2f(virtualX, this->tankBody.getPosition().y)) && Frames > 450) {
-				if (virtualX < xPoint){
-					startUp = false; startDown = false; direction = false; downOnly = false; upOnly = false;
-				}
-				else {
-					startUp = false; startDown = false; direction = true; downOnly = false; upOnly = false;
-				}
+		float botX = this->tankBody.getPosition().x;
+		float botY = this->tankBody.getPosition().y;
 
-					createbullet(upOnly, downOnly);	
+		if (PlayerPos.x - 20 < botX && PlayerPos.x + 20 > botX && Frames>450) {
+			if (PlayerPos.y < botY) {
+				startUp = true; startDown = false; upOnly = true; startDown = false;
 			}
-			virtualX += 60;
+			else {
+				startUp = false; startDown = true; upOnly = false; downOnly = true;
+			}
+			createbullet(upOnly, downOnly);
 		}
 
-		float virtualY = 0;
-		float yPoint = this->tankBody.getPosition().y;
-
-		while (virtualY < 600) {
-			if (CheckAim(PlayerPos, sf::Vector2f(this->tankBody.getPosition().x, virtualY))&&Frames>450) {
-				if (virtualY < yPoint) {
-					startUp = true; startDown = false; upOnly = true; startDown = false;
-				}
-				else {
-					startUp = false; startDown = true; upOnly = false; downOnly = true;
-				}
-				createbullet(upOnly, downOnly);
+		if (PlayerPos.y - 30 < botY && PlayerPos.y + 30 > botY && Frames > 450) {
+			if(PlayerPos.x < botX) {
+				startUp = false; startDown = false; direction = false; downOnly = false; upOnly = false;
 			}
-			virtualY += 30;
+			else {
+				startUp = false; startDown = false; direction = true; downOnly = false; upOnly = false;
+			}
+
+			createbullet(upOnly, downOnly);
 		}
-
-
-		
+	
 		//==================
 		if (checkColission(map, PlayerPos, BotsPos, ib, isDead))
 		{
@@ -298,21 +293,6 @@ void Bots::setdirection(bool  upOnly, bool  downOnly, bool  rightOnly, bool  lef
 			break;
 		}
 	}
-}
-
-bool Bots::CheckAim(sf::Vector2f PlayerPos,sf::Vector2f FakePos)
-{
-
-	float deltaX, deltaY, intersectX, intersectY;
-
-	deltaX = abs(FakePos.x - PlayerPos.x);
-	deltaY = abs(FakePos.y - PlayerPos.y);
-	intersectX = deltaX - 60.0f;
-	intersectY = deltaY - 42.0f;
-	if (intersectX < 0.0f && intersectY < 0.0f)
-		return true;
-
-	return false;
 }
 
 void Bots::createbullet(bool upOnly,bool downOnly)

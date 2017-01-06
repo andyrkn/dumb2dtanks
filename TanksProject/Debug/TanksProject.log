@@ -1,10 +1,7 @@
-﻿  TanksProject.cpp
-c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(39): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(40): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(81): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(118): warning C4996: 'sf::Text::setColor': was declared deprecated
-  c:\sfml-2.4.1\include\sfml\graphics\text.hpp(177): note: see declaration of 'sf::Text::setColor'
+﻿  Bots.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(92): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(180): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(198): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(211): warning C4018: '<': signed/unsigned mismatch
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)

@@ -24,7 +24,6 @@ public:
 private:
 
 	void setdirection(bool upOnly, bool downOnly, bool rightOnly, bool leftOnly);
-	bool CheckAim(sf::Vector2f PlayerPos,sf::Vector2f FakePos);
 	void createbullet(bool upOnly,bool downOnly);
 
 	sf::RectangleShape tankBody;
