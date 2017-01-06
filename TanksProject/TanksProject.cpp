@@ -112,6 +112,15 @@ int main()
 				for (int bots = 0; bots < 3; bots++)
 					bot[bots] = createbot(playerTanksbackup, playerTankTextures,used,ct);
 
+				sf::Font font; font.loadFromFile("arial.ttf");
+				sf::Text PlayerHPtext;
+				PlayerHPtext.setFont(font);
+				PlayerHPtext.setColor(sf::Color(108, 193, 129));
+				PlayerHPtext.setStyle(sf::Text::Bold);
+				PlayerHPtext.setCharacterSize(24);
+				PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
+
+
 				while (GameWindow.isOpen())
 				{
 					int ib, tankLife;
@@ -120,7 +129,7 @@ int main()
 
 					while (GameWindow.pollEvent(evnt1))
 					{
-						if (evnt1.type == evnt1.Closed || EndOfGame || !player1.tankHP) {
+						if (evnt1.type == evnt1.Closed) {
 							GameWindow.close();
 							GameWindow.clear();
 						}
@@ -140,7 +149,7 @@ int main()
 						bot[ib].tankHP = botLife[ib];
 						if (bot[ib].tankHP)
 						{
-							bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+							bot[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
 							bot[ib].draw(GameWindow);
 							EndOfGame = false;
 						}
@@ -153,10 +162,17 @@ int main()
 						if (!player1.tankHP)GameWindow.close();
 					}
 
+					string HPstring = "PlayerHP : ";
+					if (player1.tankHP == 1) HPstring.push_back('1');
+					if (player1.tankHP == 2) HPstring.push_back('2');
+					if (player1.tankHP == 3) HPstring.push_back('3');
+					
+					PlayerHPtext.setString(HPstring);
 					player1.draw(GameWindow);
 					Map.draw(GameWindow);
+					GameWindow.draw(PlayerHPtext);
 					GameWindow.display();
-					GameWindow.clear(sf::Color(230, 230, 230));
+					GameWindow.clear(sf::Color(230, 230, 230)); 
 				}
 				MainMenu.setVisible(true);
 			}

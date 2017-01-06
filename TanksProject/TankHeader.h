@@ -1,9 +1,10 @@
 #include<SFML\Graphics.hpp>
 #include<Windows.h>
 #include"Bots.h"
+#include<string>
 #include<random>
 #define ToF(a) static_cast<float>(a)
-
+using namespace std;
 void inittextures(sf::RectangleShape tanks[], int nr, sf::Vector2f tanksize, sf::Texture textures[],sf::RectangleShape maintanks[], sf::RectangleShape Maps[], sf::Texture mapsTextures[], int noMaps)
 {
 	textures[0].loadFromFile("Textures/tanksblue.png");  tanks[0].setTexture(&textures[0]);

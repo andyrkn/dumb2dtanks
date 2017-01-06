@@ -93,8 +93,97 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
 {
 	if (tankHP) {
+		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
+
+		if (startUp) { upOnly = true; tankBody.move(0.0f, -0.1f); }
+		else
+			if (startDown) { downOnly = true; tankBody.move(0.0f, 0.1f); }
+			else
+				if (direction) { rightOnly = true; tankBody.move(0.1f, 0.0f); }
+				else
+				{
+					leftOnly = true; tankBody.move(-0.1f, 0.0f);
+				}
+
+		Frames++; ReloadTime++;
+		//===================
+
+		float virtualX = 0;
+		float xPoint = this->tankBody.getPosition().x;
+		
+		while (virtualX < 1200) {
+			if (CheckAim(PlayerPos, sf::Vector2f(virtualX, this->tankBody.getPosition().y)) && Frames > 450) {
+				if (virtualX < xPoint){
+					startUp = false; startDown = false; direction = false; downOnly = false; upOnly = false;
+				}
+				else {
+					startUp = false; startDown = false; direction = true; downOnly = false; upOnly = false;
+				}
+
+					createbullet(upOnly, downOnly);	
+			}
+			virtualX += 60;
+		}
+
+		float virtualY = 0;
+		float yPoint = this->tankBody.getPosition().y;
+
+		while (virtualY < 600) {
+			if (CheckAim(PlayerPos, sf::Vector2f(this->tankBody.getPosition().x, virtualY))&&Frames>450) {
+				if (virtualY < yPoint) {
+					startUp = true; startDown = false; upOnly = true; startDown = false;
+				}
+				else {
+					startUp = false; startDown = true; upOnly = false; downOnly = true;
+				}
+				createbullet(upOnly, downOnly);
+			}
+			virtualY += 30;
+		}
+
+
+		
+		//==================
+		if (checkColission(map, PlayerPos, BotsPos, ib, isDead))
+		{
+			if (upOnly) {
+				this->tankBody.move(0.0f, 0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+			}
+			if (downOnly) {
+				this->tankBody.move(0.0f, -0.1f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+			}
+			if (rightOnly) {
+				this->tankBody.move(-0.1f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+			}
+			if (leftOnly) {
+				this->tankBody.move(0.1f, 0.0f); setdirection(upOnly, downOnly, rightOnly, leftOnly);
+			}
+		}
+
+		animation.Update(delta, direction);
+		this->tankBody.setTextureRect(animation.currentTexture);
+
+		this->tankBody.setRotation(0);
+
+		if (upOnly)
+			this->tankBody.setRotation(90);
+		if (downOnly)
+			this->tankBody.setRotation(-90);
+		if (direction)
+		{
+			if (upOnly)
+				this->tankBody.setRotation(-90);
+			if (downOnly)
+				this->tankBody.setRotation(90);
+		}
 
 	}
+
+	if (ReloadTime > 600)
+		PVector.clear();
+
+	for (int i = 0; i < PVector.size(); i++)
+		PVector[i].fire(2);
 }
 
 
@@ -209,6 +298,35 @@ void Bots::setdirection(bool  upOnly, bool  downOnly, bool  rightOnly, bool  lef
 			break;
 		}
 	}
+}
+
+bool Bots::CheckAim(sf::Vector2f PlayerPos,sf::Vector2f FakePos)
+{
+
+	float deltaX, deltaY, intersectX, intersectY;
+
+	deltaX = abs(FakePos.x - PlayerPos.x);
+	deltaY = abs(FakePos.y - PlayerPos.y);
+	intersectX = deltaX - 60.0f;
+	intersectY = deltaY - 42.0f;
+	if (intersectX < 0.0f && intersectY < 0.0f)
+		return true;
+
+	return false;
+}
+
+void Bots::createbullet(bool upOnly,bool downOnly)
+{
+	Frames = 0;
+	ReloadTime = 0;
+	int dir = 0;
+	if (upOnly) dir = 4;
+	if (downOnly) dir = 2;
+	if (direction && dir == 0) dir = 1;
+	if (!direction && dir == 0) dir = 3;
+
+	Projectiles bullet(this->tankBody.getPosition(), dir);
+	PVector.push_back(bullet);
 }
 
 

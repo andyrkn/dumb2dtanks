@@ -164,6 +164,9 @@
     <ClCompile Include="TankPlayer.cpp" />
     <ClCompile Include="TanksProject.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="arial.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
