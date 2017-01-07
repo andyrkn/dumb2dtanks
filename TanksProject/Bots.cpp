@@ -225,7 +225,20 @@ bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[
 			{
 				isDead--;
 				PVector.erase(PVector.begin() + j);
+				gone = true;
 			}
+		if (!gone)
+			for (k = 0; k <= 3; k++)
+				if (k != ib)
+				{
+					if (PVector[j].getPos().x >= BotsPos[k].x - 30.0f && PVector[j].getPos().x <= BotsPos[k].x + 30.0f)
+						if (PVector[j].getPos().y >= BotsPos[k].y - 21.0f && PVector[j].getPos().y <= BotsPos[k].y + 21.0f)
+						{
+							PVector.erase(PVector.begin() + j);
+							break;
+						}
+				}
+
 	}
 
 	int i;
