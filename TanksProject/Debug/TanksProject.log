@@ -1,15 +1,10 @@
-﻿  TankPlayer.cpp
-c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(90): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(98): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(109): warning C4018: '<': signed/unsigned mismatch
-  Bots.cpp
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(92): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(174): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(199): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(310): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(322): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(335): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(484): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  TanksProject.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(39): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(40): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(81): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(118): warning C4996: 'sf::Text::setColor': was declared deprecated
+  c:\sfml-2.4.1\include\sfml\graphics\text.hpp(177): note: see declaration of 'sf::Text::setColor'
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)

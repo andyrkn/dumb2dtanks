@@ -162,15 +162,29 @@ int main()
 						if (!player1.tankHP)GameWindow.close();
 					}
 
+
+
+					PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
 					string HPstring = "PlayerHP : ";
 					if (player1.tankHP == 1) HPstring.push_back('1');
 					if (player1.tankHP == 2) HPstring.push_back('2');
 					if (player1.tankHP == 3) HPstring.push_back('3');
-					
 					PlayerHPtext.setString(HPstring);
-					player1.draw(GameWindow);
-					Map.draw(GameWindow);
 					GameWindow.draw(PlayerHPtext);
+
+
+
+					PlayerHPtext.setPosition(sf::Vector2f(1000.0f, 10.0f));
+					HPstring = "Enemy HP : ";
+					if (bot[0].tankHP == 1) HPstring.push_back('1');
+					if (bot[0].tankHP == 2) HPstring.push_back('2');
+					if (bot[0].tankHP == 3) HPstring.push_back('3');
+					PlayerHPtext.setString(HPstring);
+					GameWindow.draw(PlayerHPtext);
+
+
+					player1.draw(GameWindow);
+					Map.draw(GameWindow);			
 					GameWindow.display();
 					GameWindow.clear(sf::Color(230, 230, 230)); 
 				}

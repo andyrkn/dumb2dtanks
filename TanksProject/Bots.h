@@ -20,7 +20,7 @@ public:
 	bool checkColissionHard(Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead);
 	sf::Vector2f GetPosition();
 	void changePos(float delta);
-	int tankHP = 3333;
+	int tankHP = 3;
 
 private:
 

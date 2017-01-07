@@ -19,7 +19,6 @@ Bots::Bots(sf::RectangleShape tankBody, sf::Texture * texture, int imageCount, f
 		if (x == 2) startDown = true; else
 			if (x == 3) direction = false; else
 				if (x == 4) startUp = true;
-
 }
 
 Bots::~Bots()
@@ -321,6 +320,7 @@ void Bots::draw(sf::RenderWindow & window)
 
 		for (int i = 0; i < PVector.size(); i++)
 			PVector[i].draw(window);
+
 	}
 }
 
