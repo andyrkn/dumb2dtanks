@@ -6,5 +6,8 @@ c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(40): wa
 c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(81): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(118): warning C4996: 'sf::Text::setColor': was declared deprecated
   c:\sfml-2.4.1\include\sfml\graphics\text.hpp(177): note: see declaration of 'sf::Text::setColor'
+  Projectiles.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\projectiles.cpp(57): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)

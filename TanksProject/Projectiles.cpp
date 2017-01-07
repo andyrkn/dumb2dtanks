@@ -60,8 +60,10 @@ void Projectiles::draw(sf::RenderWindow & window)
 		int alpha = color.a;
 		if (alpha >0)
 			smokeSprite[i].setColor(sf::Color(255, 255, 255, alpha - 1));
-		if(alpha)
+		if (alpha)
 			window.draw(smokeSprite[i]);
+		else
+			smokeSprite.erase(smokeSprite.begin()+i);
 	}
 }
 
