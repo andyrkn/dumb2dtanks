@@ -18,7 +18,7 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 {
 	this->tankBody.setRotation(0);
 	
-	float speed = 0.3f;
+	float speed = 0.2f;
 	
 	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-speed, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; }
