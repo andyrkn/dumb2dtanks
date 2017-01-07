@@ -14,17 +14,19 @@ public:
 	~Bots();
 	void UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead);
 	void UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead);
-	void UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead);
+	void UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead,vector<Projectiles> PlayerBullets);
 	void draw(sf::RenderWindow& window);
 	bool checkColission(Maps map,sf::Vector2f PlayerPos,sf::Vector2f BotsPos[], int ib, int &isDead);
+	bool checkColissionHard(Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead);
 	sf::Vector2f GetPosition();
 	void changePos(float delta);
-	int tankHP = 3;
+	int tankHP = 3333;
 
 private:
 
 	void setdirection(bool upOnly, bool downOnly, bool rightOnly, bool leftOnly);
 	void createbullet(bool upOnly,bool downOnly);
+	void directionDetails(bool upOnly, bool downOnly, bool rightOnly, bool leftOnly);
 
 	sf::RectangleShape tankBody;
 	Animation animation;

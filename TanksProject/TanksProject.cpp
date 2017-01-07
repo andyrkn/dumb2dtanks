@@ -109,7 +109,7 @@ int main()
 				bool hasBeenKilled[] = { false, false, false, false}, EndOfGame;
 				sf::Vector2f botPos[4];
 				Bots bot[4];
-				for (int bots = 0; bots < 3; bots++)
+				for (int bots = 0; bots < 1; bots++)
 					bot[bots] = createbot(playerTanksbackup, playerTankTextures,used,ct);
 
 				sf::Font font; font.loadFromFile("arial.ttf");
@@ -149,7 +149,7 @@ int main()
 						bot[ib].tankHP = botLife[ib];
 						if (bot[ib].tankHP)
 						{
-							bot[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+							bot[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife,player1.getBullets());
 							bot[ib].draw(GameWindow);
 							EndOfGame = false;
 						}

@@ -9,8 +9,8 @@ public:
 	Projectiles(sf::Vector2f pos, int dir);
 	~Projectiles();
 	sf::Vector2f getPos();
-
-	void fire(int speed);
+	int getDir();
+	void fire(float speed);
 	void draw(sf::RenderWindow &window);
 
 private:

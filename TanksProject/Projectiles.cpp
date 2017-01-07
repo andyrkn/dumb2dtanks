@@ -22,7 +22,14 @@ sf::Vector2f Projectiles::getPos()
 	return this->sprite.getPosition();
 }
 
-void Projectiles::fire(int speed)
+int Projectiles::getDir()
+{
+	return dir;
+}
+
+
+
+void Projectiles::fire(float speed)
 {
 	this->sprite.setRotation(0);
 
@@ -37,7 +44,7 @@ void Projectiles::fire(int speed)
 		if (dir == 4) newSprite.move(-3.0f, 3.0f);
 		if (dir == 2 ) newSprite.move(5.0f, -16.0f);
 		newSprite.setOrigin(sf::Vector2f(6.0f, 13.0f));
-		newSprite.setColor(sf::Color(255, 255, 255,8));
+		newSprite.setColor(sf::Color(255, 255, 255,9));
 		if (dir == 1) newSprite.setRotation(180);
 		if (dir == 2) newSprite.setRotation(-90);
 		if (dir == 4) newSprite.setRotation(90);

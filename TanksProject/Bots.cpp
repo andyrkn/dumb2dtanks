@@ -95,7 +95,6 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 }
 
 
-
 void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
 {
 	if (tankHP) {
@@ -177,9 +176,139 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 }
 
 
-void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
+void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead, vector<Projectiles> PlayerBullets)
 {
+	float speed = 0.3f;
 	if (tankHP) {
+		Frames++; ReloadTime++;
+		//==============MOVEMENT + SWAG
+		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
+
+		if (startUp) { upOnly = true; tankBody.move(0.0f, -speed);	  }	else
+		if (startDown) { downOnly = true; tankBody.move(0.0f, speed); }	else
+		if (direction) { rightOnly = true; tankBody.move(speed, 0.0f); }else
+			{leftOnly = true; tankBody.move(-speed, 0.0f);	}
+
+		int bi;
+
+		float botX = this->tankBody.getPosition().x;
+		float botY = this->tankBody.getPosition().y;
+		float sizeX = this->tankBody.getSize().x;
+		float sizey = this->tankBody.getSize().y;
+
+		for (bi = 0; bi < PlayerBullets.size(); bi++) {
+			 
+			int dir = PlayerBullets[bi].getDir();
+			sf::Vector2f bulletPos = PlayerBullets[bi].getPos();
+
+			float absx1 = abs(botX - sizeX / 2 - bulletPos.x);
+			float absx2 = abs(botX + sizeX / 2 - bulletPos.x);
+
+			if (bulletPos.x >= botX - sizeX / 2 && bulletPos.x <= botX + sizeX / 2){
+				if (absx1 < absx2) {
+					if (bulletPos.y < botY && dir == 2){
+						direction = true; startUp = false; startDown = false;}
+					if (bulletPos.y > botY && dir == 4){
+						direction = true; startUp = false; startDown = false;}
+				}
+				else {
+					if (bulletPos.y < botY && dir == 2){
+						direction = false; startUp = false; startDown = false;}
+					if (bulletPos.y > botY && dir == 4){
+						direction = false; startUp = false; startDown = false;}
+				}
+			}
+			
+			float absy1 = abs(botY - sizey / 2 - bulletPos.y);
+			float absy2 = abs(botY + sizey / 2 - bulletPos.y);
+
+			if (bulletPos.y >= botY - sizey / 2 && bulletPos.y <= botY + sizey / 2) {
+				if (absy1 < absy2) {
+					if (bulletPos.x > botX && dir == 3){
+						startDown = true; startUp = false;
+				}
+					if (bulletPos.x <= botX && dir == 1){
+						startDown = true; startUp = false;
+				}
+				}
+				else {
+					if (bulletPos.x > botX && dir == 3){
+						startUp = true; startDown = false;
+				}
+					if (bulletPos.x <= botX && dir == 1) {
+						startUp = true; startDown = false;
+					}
+				}
+
+			}
+			
+		}
+		// 1 dreapta, 2 jos, 3 stanga, 4 sus.
+		//======================== AIM
+		
+
+		if (PlayerPos.x - 20 < botX && PlayerPos.x + 20 > botX && Frames>450) {
+			if (PlayerPos.y < botY) {
+				startUp = true; startDown = false; upOnly = true; startDown = false;
+			}
+			else {
+				startUp = false; startDown = true; upOnly = false; downOnly = true;
+			}
+			createbullet(upOnly, downOnly);
+		}
+
+		if (PlayerPos.y - 30 < botY && PlayerPos.y + 30 > botY && Frames > 450) {
+			if (PlayerPos.x < botX) {
+				startUp = false; startDown = false; direction = false; downOnly = false; upOnly = false;
+			}
+			else {
+				startUp = false; startDown = false; direction = true; downOnly = false; upOnly = false;
+			}
+
+			createbullet(upOnly, downOnly);
+		}
+		
+		//==========================
+
+		if (checkColission(map, PlayerPos, BotsPos, ib, isDead))
+		{
+			if (upOnly) {
+				this->tankBody.move(0.0f, speed); startUp = false; startDown = true;
+			}
+			if (downOnly) {
+				this->tankBody.move(0.0f, -speed); startUp = true; startDown = false;
+			}
+			if (rightOnly) {
+				this->tankBody.move(-speed, 0.0f); direction = false;
+			}
+			if (leftOnly) {
+				this->tankBody.move(speed, 0.0f); direction = true;
+			}
+		}
+
+		//=============================
+		animation.Update(delta, direction);
+		this->tankBody.setTextureRect(animation.currentTexture);
+
+		this->tankBody.setRotation(0);
+
+		if (upOnly)
+			this->tankBody.setRotation(90);
+		if (downOnly)
+			this->tankBody.setRotation(-90);
+		if (direction)
+		{
+			if (upOnly)
+				this->tankBody.setRotation(-90);
+			if (downOnly)
+				this->tankBody.setRotation(90);
+		}
+
+	if (ReloadTime > 600)
+		PVector.clear();
+
+	for (int i = 0; i < PVector.size(); i++)
+		PVector[i].fire(1.5f);
 
 	}
 }
@@ -317,6 +446,22 @@ void Bots::createbullet(bool upOnly,bool downOnly)
 	PVector.push_back(bullet);
 }
 
+void Bots::directionDetails(bool upOnly, bool downOnly, bool rightOnly, bool leftOnly)
+{
+	if (upOnly) {
+		this->tankBody.move(0.0f, 0.15f); startDown = true; startUp = false;
+	}
+	if (downOnly) {
+		this->tankBody.move(0.0f, -0.15f); startUp = true; startDown = false;
+	}
+	if (rightOnly) {
+		this->tankBody.move(-0.15f, 0.0f); direction = false;
+	}
+	if (leftOnly) {
+		this->tankBody.move(0.15f, 0.0f); direction = true;
+	}
+}
+
 
 sf::Vector2f Bots::GetPosition()
 {
@@ -326,4 +471,82 @@ sf::Vector2f Bots::GetPosition()
 void Bots::changePos(float delta)
 {
 	this->tankBody.move(0.0f, delta);
+}
+
+
+bool Bots::checkColissionHard(Maps map, sf::Vector2f PlayerPos, sf::Vector2f BotsPos[], int ib, int &isDead)
+{
+	float deltaX, deltaY, intersectX, intersectY;
+	sf::RectangleShape object;
+	int k;
+	bool gone;
+
+	for (int j = 0; j < PVector.size(); j++)
+	{
+		gone = false;
+		for (k = 0; k < map.getNoWalls(); k++)
+		{
+			object = map.getWall(k);
+			if (PVector[j].getPos().x >= object.getPosition().x
+				&& PVector[j].getPos().x <= (object.getPosition().x + object.getSize().x))
+				if (PVector[j].getPos().y >= object.getPosition().y
+					&& PVector[j].getPos().y <= (object.getPosition().y + object.getSize().y))
+				{
+					PVector.erase(PVector.begin() + j);
+					gone = true;
+					break;
+				}
+		}
+		if (!gone)
+			if (PVector[j].getPos().x >= PlayerPos.x - 30.0f && PVector[j].getPos().x <= PlayerPos.x + 30.0f)
+				if (PVector[j].getPos().y >= PlayerPos.y - 21.0f && PVector[j].getPos().y <= PlayerPos.y + 21.0f)
+				{
+					isDead--;
+					PVector.erase(PVector.begin() + j);
+					gone = true;
+				}
+		if (!gone)
+			for (k = 0; k <= 3; k++)
+				if (k != ib)
+				{
+					if (PVector[j].getPos().x >= BotsPos[k].x - 30.0f && PVector[j].getPos().x <= BotsPos[k].x + 30.0f)
+						if (PVector[j].getPos().y >= BotsPos[k].y - 21.0f && PVector[j].getPos().y <= BotsPos[k].y + 21.0f)
+						{
+							PVector.erase(PVector.begin() + j);
+							break;
+						}
+				}
+
+	}
+
+	int i;
+	for (i = 0; i < map.getNoWalls(); i++)
+	{
+		sf::Vector2f wallPosition = map.getWall(i).getPosition();
+		deltaX = abs(wallPosition.x + map.getWall(i).getSize().x / 2 - this->tankBody.getPosition().x);
+		deltaY = abs(wallPosition.y + map.getWall(i).getSize().y / 2 - this->tankBody.getPosition().y);
+		intersectX = deltaX - (map.getWall(i).getSize().x / 2 + tankBody.getSize().x / 2);
+		intersectY = deltaY - (map.getWall(i).getSize().y / 2 + tankBody.getSize().y / 2);
+		if (intersectX < 0.0f && intersectY < 0.0f)
+			return true;
+	}
+	float auxX = this->tankBody.getPosition().x;
+	float auxY = this->tankBody.getPosition().y;
+	for (i = 0; i < 3; i++)
+		if (ib != i) {
+			deltaX = abs(BotsPos[i].x - this->tankBody.getPosition().x);
+			deltaY = abs(BotsPos[i].y - this->tankBody.getPosition().y);
+			intersectX = deltaX - 60.0f;
+			intersectY = deltaY - 42.0f;
+			if (intersectX < 0.0f && intersectY < 0.0f)
+				return true;
+		}
+	deltaX = abs(this->tankBody.getPosition().x - PlayerPos.x);
+	deltaY = abs(this->tankBody.getPosition().y - PlayerPos.y);
+	intersectX = deltaX - 60.0f;
+	intersectY = deltaY - 42.0f;
+	if (intersectX < 0.0f && intersectY < 0.0f)
+		return true;
+
+	return false;
 }
