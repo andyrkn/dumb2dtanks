@@ -210,7 +210,7 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 				if ((bulletPos.y < botY && dir == 2) || (bulletPos.y > botY && dir == 4)) {
 					if (absx1 < absx2) {
 						virtualUp = virtualDown = false; virtualLeft = false; virtualRight = true;
-						if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absx1 + 5.0f)) {
+						if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absx1 + 8.0f)) {
 							direction = true; startUp = false; startDown = false; incoming = true;
 						}
 						else
@@ -229,7 +229,7 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 						else
 						{
 							virtualUp = virtualDown = false; virtualLeft = false; virtualRight = true;
-							if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absx1 + 5.0f)) {
+							if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absx1 + 8.0f)) {
 								direction = true; startUp = false; startDown = false; incoming = true;
 							}
 						}
@@ -243,25 +243,25 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 				if ((bulletPos.x < botX && dir == 1) || (bulletPos.x > botY && dir == 3)) {
 					if (absy1 < absy2) {
 						virtualUp = false; virtualDown = true; virtualLeft = virtualRight = false;
-						if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy1 + 5.0f)) {
+						if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy1 + 8.0f)) {
 							startDown = true; startUp = false; incoming = true;
 						}
 						else {
 							virtualUp = true; virtualDown = false; virtualLeft = virtualRight = false;
-							if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy2 + 5.0f)) {
+							if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy2 + 8.0f)) {
 								startUp = true; startDown = false; incoming = true;
 							}
 						}
 					}
 					else {
 						virtualUp = true; virtualDown = false; virtualLeft = virtualRight = false;
-						if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy2 + 5.0f)) {
+						if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy2 + 8.0f)) {
 							startUp = true; startDown = false; incoming = true;
 						}
 						else
 						{
 							virtualUp = false; virtualDown = true; virtualLeft = virtualRight = false;
-							if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy1 + 5.0f)) {
+							if (!checkColissionHard(map, BotsPos, ib, virtualUp, virtualDown, virtualLeft, virtualRight, absy1 + 8.0f)) {
 								startDown = true; startUp = false; incoming = true;
 							}
 						}
@@ -276,7 +276,7 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 		//======================== AIM
 		
 
-		if (PlayerPos.x - 20 < botX && PlayerPos.x + 20 > botX && Frames>450) {
+		if (PlayerPos.x - 21 < botX && PlayerPos.x + 21 > botX && Frames>450) {
 			if (PlayerPos.y < botY) {
 				startUp = true; startDown = false; upOnly = true; startDown = false;
 			}
@@ -321,8 +321,6 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 				if(!incoming)
 					setdirection(upOnly, downOnly, rightOnly, leftOnly);
 			}
-
-			if (!PlayerBullets.empty()) setdirection(upOnly, downOnly, rightOnly, leftOnly);
 		}
 
 		//=============================
