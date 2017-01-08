@@ -12,7 +12,7 @@ Bots::Bots(sf::RectangleShape tankBody, sf::Texture * texture, int imageCount, f
 {
 	this->tankBody = tankBody;
 	this->tankBody.setOrigin(sf::Vector2f(this->tankBody.getSize().x / 2, this->tankBody.getSize().y / 2));
-
+	this->tankBody.move(0.0f, -60.0f);
 	int x = rand() % 4 + 1;
 
 	if (x == 1) direction = true; else
@@ -31,7 +31,7 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 	if (tankHP) {
 
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
-		float speed = 1.5f;
+		float speed = 0.25f;
 		if (startUp)   {	upOnly    = true; tankBody.move(0.0f, -speed);   }	else
 		if (startDown) {	downOnly  = true; tankBody.move(0.0f, speed);    }	else
 		if (direction) {	rightOnly = true; tankBody.move(speed, 0.0f);	}	else
@@ -98,7 +98,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 {
 	if (tankHP) {
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
-		float speed = 0.15f;
+		float speed = 0.25f;
 		if (startUp) { upOnly = true; tankBody.move(0.0f, -speed); }else
 		if (startDown) { downOnly = true; tankBody.move(0.0f, speed); }	else
 		if (direction) { rightOnly = true; tankBody.move(speed, 0.0f); }else
@@ -368,7 +368,7 @@ bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[
 				gone = true;
 			}
 		if (!gone)
-			for (k = 0; k <= 3; k++)
+			for (k = 0; k <= 4; k++)
 				if (k != ib)
 				{
 					if (PVector[j].getPos().x+4.0f >= BotsPos[k].x - 30.0f && PVector[j].getPos().x-4.0f <= BotsPos[k].x + 30.0f)
@@ -393,7 +393,7 @@ bool Bots::checkColission(Maps map,sf::Vector2f PlayerPos, sf::Vector2f BotsPos[
 	}
 	float auxX = this->tankBody.getPosition().x;
 	float auxY = this->tankBody.getPosition().y;
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 4; i++)
 		if (ib != i){
 		deltaX = abs(BotsPos[i].x - this->tankBody.getPosition().x);
 		deltaY = abs(BotsPos[i].y - this->tankBody.getPosition().y);
@@ -496,7 +496,7 @@ bool Bots::checkColissionHard(Maps map, sf::Vector2f BotsPos[],int nrBot, bool d
 	}
 	float auxX = this->tankBody.getPosition().x;
 	float auxY = this->tankBody.getPosition().y;
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 4; i++)
 		if (nrBot != i) {
 			deltaX = abs(BotsPos[i].x - this->tankBody.getPosition().x);
 			deltaY = abs(BotsPos[i].y - this->tankBody.getPosition().y);

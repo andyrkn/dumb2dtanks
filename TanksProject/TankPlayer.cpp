@@ -126,7 +126,7 @@ bool TankPlayer::checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]
 				}
 		}
 		if(!gone)
-		for (k = 0; k < 3; k++)
+		for (k = 0; k < 5; k++)
 		{
 			if (PVector[j].getPos().x >= botPos[k].x - 30.0f && PVector[j].getPos().x <= botPos[k].x + 30.0f)
 				if (PVector[j].getPos().y >= botPos[k].y - 21.0f && PVector[j].getPos().y <= botPos[k].y + 21.0f)
@@ -137,7 +137,7 @@ bool TankPlayer::checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]
 				}
 		}
 	}
-	for (k = 0; k < 3; k++)
+	for (k = 0; k < 5; k++)
 		if(botLife[k])
 	{
 		deltaX = abs(this->tankBody.getPosition().x - botPos[k].x);

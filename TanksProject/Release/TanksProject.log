@@ -1,0 +1,27 @@
+﻿  Bots.cpp
+Bots.cpp(91): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(173): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(218): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(320): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(182): warning C4101: 'botX': unreferenced local variable
+Bots.cpp(332): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(346): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(476): warning C4101: 'k': unreferenced local variable
+  TankPlayer.cpp
+TankPlayer.cpp(93): warning C4018: '<': signed/unsigned mismatch
+TankPlayer.cpp(101): warning C4018: '<': signed/unsigned mismatch
+TankPlayer.cpp(112): warning C4018: '<': signed/unsigned mismatch
+  TanksProject.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(136): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(248): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(316): warning C4996: 'sf::Text::setColor': was declared deprecated
+  C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
+  Generating code
+  113 of 474 functions (23.8%) were compiled, the rest were copied from previous compilation.
+    40 functions were new in current compilation
+    15 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Release\TanksProject.exe
+  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Release\TanksProject.pdb (Full PDB)
