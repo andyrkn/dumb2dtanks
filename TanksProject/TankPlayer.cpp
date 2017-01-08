@@ -18,13 +18,16 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 {
 	this->tankBody.setRotation(0);
 	
-	float speed = 0.2f;
+	float speed = 0.25f;
 	
-	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-speed, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, speed); directionUp = false; directionDown = true; downOnly = true; didItMove = true;direction = false; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(speed, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -speed); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
+	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false, didItMoveOx=false, didItMoveOy=false;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-speed, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; didItMoveOx = true; }
+	if(!didItMove)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, speed); directionUp = false; directionDown = true; downOnly = true; didItMove = true; direction = false; didItMoveOy = true; }
+	if(!didItMove)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(speed, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
+	if(!didItMove)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -speed); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
 
 	if (checkColission(map, botPos, botLife))
 	{
@@ -88,7 +91,7 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 	}
 
 	for (int i = 0; i < PVector.size(); i++)
-		PVector[i].fire(1.0f);
+		PVector[i].fire(1.5f);
 }
 
 void TankPlayer::draw(sf::RenderWindow& window)

@@ -15,7 +15,6 @@ public:
 
 private:
 	sf::Sprite sprite;
-
 	vector<sf::Sprite> smokeSprite;
 	// 1 dreapta, 2 jos, 3 stanga, 4 sus.
 	int dir;

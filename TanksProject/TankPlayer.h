@@ -14,7 +14,7 @@ public:
 	void Update(float delta, Maps map, sf::Vector2f botPos[4], int botLife[4]);
 	void draw(sf::RenderWindow& window);
 	bool checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]);
-	int tankHP = 3;
+	int tankHP = 5;
 	sf::Vector2f GetPosition();
 	vector<Projectiles> getBullets();
 	
