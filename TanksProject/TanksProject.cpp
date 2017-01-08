@@ -5,48 +5,13 @@
 
 int main()
 {
-	
-	// RENDER WINDOWS 
-
-	sf::RenderWindow MainMenu(sf::VideoMode(1000, 600), "Tanks Menu", sf::Style::Close);
-
-
 	// HIDE CONSOLE
 
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 
-	// STANDARD VECTORS FOR SIZES
+	// -- GLOBAL LOAD
 
-	sf::Vector2f baserectangle = sf::Vector2f(100.0f, 50.0f);
-	sf::Vector2f largerRectangle = sf::Vector2f(200.0f, 100.0f);
-	sf::Vector2f tankVector = sf::Vector2f(60.0f, 42.0f);
-	sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle), CurrentTankTXT(baserectangle);
-	sf::RectangleShape currentTank(baserectangle);
-
-	// INITIALIZE TANK TEXTURES 
-
-	sf::Texture playerTankTextures[5], mapsTextures[3];
-	sf::RectangleShape playerTanksbackup[5], playerTanks[5], MAPS[3];
-	inittextures(playerTanksbackup, 5, tankVector, playerTankTextures, playerTanks, MAPS, mapsTextures, 3);
-
-	//SETTINGS BUTTONS TEXTURE/POSITION
-
-	ExitButton.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
-	SingleplayerButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
-	CurrentTankTXT.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
-
-	ExitButton.setPosition(MainMenu.getSize().x / 2 - 250.0f, 460.0f);
-	SingleplayerButton.setPosition(MainMenu.getSize().x / 2 - 250, 320.0f);
-	CurrentTankTXT.setPosition(MainMenu.getSize().x / 2 + 200, 480.0f);
-
-	sf::Texture ExitButtonText, SingpleButtonText, CurrentTankTexture;
-	ExitButtonText.loadFromFile("Textures/MenuText.png");
-	SingpleButtonText.loadFromFile("Textures/SingleplayerText.png");
-	CurrentTankTexture.loadFromFile("Textures/CurrentTankTXT.png");
-
-	ExitButton.setTexture(&ExitButtonText);
-	SingleplayerButton.setTexture(&SingpleButtonText);
-	CurrentTankTXT.setTexture(&CurrentTankTexture);
+	LoadVariables();
 
 	// -- PROGRAM START
 
@@ -55,7 +20,8 @@ int main()
 	bool currentTankSelectedBool = false, mapSelected=false;
 	sf::Texture currentTextureSel;
 	Maps Map;
-	int ct;
+	int ct;  //
+
 	while (MainMenu.isOpen()) {
 		sf::Event evnt;
 		while (MainMenu.pollEvent(evnt))
@@ -73,7 +39,7 @@ int main()
 			if (mouseclickbutton(mousepos, ExitButton) == true)
 				MainMenu.close();
 
-			for (int st = 0; st < 5; st++)
+			for (int st = 0; st < 5; st++)  // tank selection
 				if (mouseclickbutton(mousepos, playerTanksbackup[st]) == true)	{
 					currentTank = playerTanksbackup[st];
 					ct = st;
@@ -199,15 +165,7 @@ int main()
 
 		}
 
-		MainMenu.draw(ExitButton);
-		MainMenu.draw(SingleplayerButton);
-		MainMenu.draw(CurrentTankTXT);
-		if (currentTankSelectedBool)
-			MainMenu.draw(currentTank);
-		for (int i = 0; i < 5; i++)
-			MainMenu.draw(playerTanksbackup[i]);
-		for (int j = 0; j < 3; j++)
-			MainMenu.draw(MAPS[j]);
+		drawButtons(currentTankSelectedBool);
 		MainMenu.display();
 		MainMenu.clear(sf::Color(132, 137, 201));
 	}

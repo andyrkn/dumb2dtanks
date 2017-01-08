@@ -1,9 +1,9 @@
-﻿Build started 08.01.2017 16:52:52.
-     1>Project "C:\Users\Mihai\Documents\TanksRepository\TanksProject\TanksProject.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         TanksProject.vcxproj -> C:\Users\Mihai\Documents\TanksRepository\Debug\TanksProject.exe
-     1>Done Building Project "C:\Users\Mihai\Documents\TanksRepository\TanksProject\TanksProject.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.27
+﻿  TanksProject.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(32): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(102): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(47): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tanksproject.cpp(85): warning C4996: 'sf::Text::setColor': was declared deprecated
+  c:\sfml-2.4.1\include\sfml\graphics\text.hpp(177): note: see declaration of 'sf::Text::setColor'
+  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
+  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)

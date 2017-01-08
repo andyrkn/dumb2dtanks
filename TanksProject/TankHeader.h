@@ -63,3 +63,75 @@ Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int
 	}
 }
 
+//============= MAIN VARIABLES 
+// RENDER WINDOWS 
+
+sf::RenderWindow MainMenu(sf::VideoMode(1000, 600), "Tanks Menu", sf::Style::Close);
+
+// INITIALIZE TANK TEXTURES 
+
+sf::Texture playerTankTextures[5], mapsTextures[3];
+sf::RectangleShape playerTanksbackup[5], playerTanks[5], MAPS[3];
+
+
+// STANDARD VECTORS FOR SIZES
+
+sf::Vector2f baserectangle = sf::Vector2f(100.0f, 50.0f);
+sf::Vector2f largerRectangle = sf::Vector2f(200.0f, 100.0f);
+sf::Vector2f tankVector = sf::Vector2f(60.0f, 42.0f);
+sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle), CurrentTankTXT(baserectangle);
+sf::RectangleShape currentTank(baserectangle);
+sf::RectangleShape OptionsButton(largerRectangle), SurvivalButton(largerRectangle), PvPButton(largerRectangle);
+sf::Texture ExitButtonText, SingpleButtonText, CurrentTankTexture, OptionsText, SurvivalText, PvPText;
+
+
+void LoadVariables()
+{
+	inittextures(playerTanksbackup, 5, tankVector, playerTankTextures, playerTanks, MAPS, mapsTextures, 3);
+
+	//SETTINGS BUTTONS TEXTURE/POSITION
+	SingleplayerButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
+	SurvivalButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
+	OptionsButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
+	PvPButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
+	ExitButton.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
+	CurrentTankTXT.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
+
+	ExitButton.setPosition(200.0f, 500.0f);
+	SingleplayerButton.setPosition(200.0f, 100.0f);
+	CurrentTankTXT.setPosition(MainMenu.getSize().x / 2 + 200, 480.0f);
+	OptionsButton.setPosition(200.0f, 400.0f);
+	SurvivalButton.setPosition(200.0f, 200.0f);
+	PvPButton.setPosition(200.0f, 300.0f);
+
+	ExitButtonText.loadFromFile("Textures/MenuText.png");
+	SingpleButtonText.loadFromFile("Textures/SingleplayerText.png");
+	CurrentTankTexture.loadFromFile("Textures/CurrentTankTXT.png");
+	SurvivalText.loadFromFile("Textures/Survival.png");
+	OptionsText.loadFromFile("Textures/OptionsText.png");
+	PvPText.loadFromFile("Textures/PvPText.png");
+
+
+	ExitButton.setTexture(&ExitButtonText);
+	SingleplayerButton.setTexture(&SingpleButtonText);
+	CurrentTankTXT.setTexture(&CurrentTankTexture);
+	SurvivalButton.setTexture(&SurvivalText);
+	OptionsButton.setTexture(&OptionsText);
+	PvPButton.setTexture(&PvPText);
+}
+
+void drawButtons(bool currentTankSelectedBool)
+{
+	MainMenu.draw(ExitButton);
+	MainMenu.draw(SingleplayerButton);
+	MainMenu.draw(CurrentTankTXT);
+	MainMenu.draw(OptionsButton);
+	MainMenu.draw(SurvivalButton);
+	MainMenu.draw(PvPButton);
+	if (currentTankSelectedBool)
+		MainMenu.draw(currentTank);
+	for (int i = 0; i < 5; i++)
+		MainMenu.draw(playerTanksbackup[i]);
+	for (int j = 0; j < 3; j++)
+		MainMenu.draw(MAPS[j]);
+}
