@@ -1,11 +1,22 @@
 #pragma once
 #include<SFML\Graphics.hpp>
+#include<SFML\Audio.hpp>
 
 sf::Texture ProjectileTexturegg;
 sf::Texture SmokeTexture;
 
+sf::SoundBuffer SoundBuffer;
+sf::Sound TankFireWAV;
+
+bool loaded = false;
+
 void _loadProjectileTexture()
 {
-	ProjectileTexturegg.loadFromFile("Textures/bullet.png");
-	SmokeTexture.loadFromFile("Textures/smoke2.png");
+	if (!loaded) {
+		ProjectileTexturegg.loadFromFile("Textures/bullet.png");
+		SmokeTexture.loadFromFile("Textures/smoke2.png");
+		SoundBuffer.loadFromFile("Sounds/TankFire.wav");
+		TankFireWAV.setBuffer(SoundBuffer);
+		loaded = true;
+	}
 }

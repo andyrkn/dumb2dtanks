@@ -1,4 +1,5 @@
 #include<SFML\Graphics.hpp>
+#include<SFML\Audio.hpp>
 #include<Windows.h>
 #include"Bots.h"
 #include "TankPlayer.h"
@@ -77,6 +78,11 @@ bool currentTankSelectedBool = false, mapSelected = false;
 
 sf::RenderWindow MainMenu(sf::VideoMode(1000, 600), "Tanks Menu", sf::Style::Close);
 
+//SOUND
+
+sf::SoundBuffer ButtonClickSoundBuffer;
+sf::Sound ButtonClickSound;
+
 // INITIALIZE TANK TEXTURES 
 
 sf::Texture playerTankTextures[5], mapsTextures[3];
@@ -95,11 +101,14 @@ sf::RectangleShape SelectMapButton(largerRectangle), DifficultyButton(largerRect
 sf::RectangleShape OptionsButton(largerRectangle), SurvivalButton(largerRectangle), PvPButton(largerRectangle);
 sf::RectangleShape BackButton(largerRectangle), SelectTankButton(largerRectangle), NrOfBotsButton(largerRectangle);
 sf::RectangleShape Nr1B(baserectangle), Nr2B(baserectangle), Nr3B(baserectangle), Nr4B(baserectangle), Nr5B(baserectangle);
+sf::RectangleShape NumbersBox(baserectangle), DifficultyBox(largerRectangle), MapBox(sf::Vector2f(160.0f,80.0f));
 sf::Texture ExitButtonText, SingpleButtonText, CurrentTankTexture, OptionsText, SurvivalText, PvPText;
 sf::Texture BackButtonText, SelectTankText, NrOfBotsText;
 sf::Texture currentTextureSel, SelectMapText;
 sf::Texture Nr1BText, Nr2BText, Nr3BText, Nr4BText, Nr5BText;
 sf::Texture EasyText, NormalText, HardText, DifficultyText;
+sf::Texture SmallBoxTexture, LargeBoxTexture;
+
 // MAP
 
 Maps Map;
@@ -119,7 +128,11 @@ void LoadVariables()
 	SelectTankButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	NrOfBotsButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	SelectMapButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
-	
+	DifficultyBox.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
+	NumbersBox.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
+
+	MapBox.setOrigin(80.0f, 40.0f);
+
 	DifficultyButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	EasyButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	NormalButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
@@ -153,6 +166,10 @@ void LoadVariables()
 	Nr4B.setPosition(800.0f, 330.0f);
 	Nr5B.setPosition(900.0f, 330.0f);
 
+	DifficultyBox.setPosition(EasyButton.getPosition());
+	NumbersBox.setPosition(Nr3B.getPosition());
+	MapBox.setPosition(750.0f, 100.0f);
+
 	ExitButtonText.loadFromFile("Textures/MenuText.png");
 	SingpleButtonText.loadFromFile("Textures/SingleplayerText.png");
 	CurrentTankTexture.loadFromFile("Textures/CurrentTankTXT.png");
@@ -175,6 +192,9 @@ void LoadVariables()
 	NormalText.loadFromFile("Textures/NormalText.png");
 	HardText.loadFromFile("Textures/HardText.png");
 
+	SmallBoxTexture.loadFromFile("Textures/SmallRectangleBox.png");
+	LargeBoxTexture.loadFromFile("Textures/LargeRectangleBox.png");
+
 	ExitButton.setTexture(&ExitButtonText);
 	SingleplayerButton.setTexture(&SingpleButtonText);
 	CurrentTankTXT.setTexture(&CurrentTankTexture);
@@ -186,6 +206,10 @@ void LoadVariables()
 	NrOfBotsButton.setTexture(&NrOfBotsText);
 	SelectMapButton.setTexture(&SelectMapText);
 
+	DifficultyBox.setTexture(&LargeBoxTexture);
+	NumbersBox.setTexture(&SmallBoxTexture);
+	MapBox.setTexture(&LargeBoxTexture);
+
 	Nr1B.setTexture(&Nr1BText);
 	Nr2B.setTexture(&Nr2BText);
 	Nr3B.setTexture(&Nr3BText);
@@ -196,6 +220,10 @@ void LoadVariables()
 	EasyButton.setTexture(&EasyText);
 	NormalButton.setTexture(&NormalText);
 	HardButton.setTexture(&HardText);
+
+	//SOUND
+	ButtonClickSoundBuffer.loadFromFile("Sounds/ButtonClick.wav");
+	ButtonClickSound.setBuffer(ButtonClickSoundBuffer);
 }
 
 void drawButtons()
@@ -229,19 +257,21 @@ void OptionsWindowEngine(sf::RenderWindow &OptionsWindow)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 		sf::Vector2i mouseposOptions = sf::Mouse::getPosition(OptionsWindow);
 
-		if (mouseclickbutton(mouseposOptions, Nr1B) == true) BotsNumber = 1;
-		if (mouseclickbutton(mouseposOptions, Nr2B) == true) BotsNumber = 2;
-		if (mouseclickbutton(mouseposOptions, Nr3B) == true) BotsNumber = 3;
-		if (mouseclickbutton(mouseposOptions, Nr4B) == true) BotsNumber = 4;
+		if (mouseclickbutton(mouseposOptions, Nr1B) == true){ ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); BotsNumber = 1; NumbersBox.setPosition(Nr1B.getPosition());	}
+		if (mouseclickbutton(mouseposOptions, Nr2B) == true){ ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); BotsNumber = 2; NumbersBox.setPosition(Nr2B.getPosition());	}
+		if (mouseclickbutton(mouseposOptions, Nr3B) == true){ ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); BotsNumber = 3; NumbersBox.setPosition(Nr3B.getPosition());	}
+		if (mouseclickbutton(mouseposOptions, Nr4B) == true){ ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); BotsNumber = 4; NumbersBox.setPosition(Nr4B.getPosition());	}
 	//	if (mouseclickbutton(mouseposOptions, Nr5B) == true) BotsNumber = 5;
 
-		if (mouseclickbutton(mouseposOptions, EasyButton)) { EasyDifficulty = true; NormalDifficulty = false; HardDifficulty = false; }
-		if (mouseclickbutton(mouseposOptions, NormalButton)) { EasyDifficulty = false; NormalDifficulty = true; HardDifficulty = false; }
-		if (mouseclickbutton(mouseposOptions, HardButton)) { EasyDifficulty = false; NormalDifficulty = false; HardDifficulty = true; }
+		if (mouseclickbutton(mouseposOptions, EasyButton)) { ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); DifficultyBox.setPosition(EasyButton.getPosition()); EasyDifficulty = true; NormalDifficulty = false; HardDifficulty = false; }
+		if (mouseclickbutton(mouseposOptions, NormalButton)) { ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); DifficultyBox.setPosition(NormalButton.getPosition()); EasyDifficulty = false; NormalDifficulty = true; HardDifficulty = false; }
+		if (mouseclickbutton(mouseposOptions, HardButton)) { ButtonClickSound.play(); sf::sleep(sf::milliseconds(200)); DifficultyBox.setPosition(HardButton.getPosition()); EasyDifficulty = false; NormalDifficulty = false; HardDifficulty = true; }
 	//default Easy difficult
 
 		for (int st = 0; st < 5; st++)  // tank selection
 			if (mouseclickbutton(mouseposOptions, playerTanksbackup[st]) == true) {
+				ButtonClickSound.play();
+				sf::sleep(sf::milliseconds(200));
 				currentTank = playerTanksbackup[st];
 				ct = st;
 				currentTextureSel = playerTankTextures[st];
@@ -252,12 +282,16 @@ void OptionsWindowEngine(sf::RenderWindow &OptionsWindow)
 
 		for (int i = 0; i < 3; i++)
 			if (mouseclickbutton(mouseposOptions, MAPS[i]) == true) {
+				ButtonClickSound.play();
+				sf::sleep(sf::milliseconds(200));
 				mapSelected = true;
 				Map.selectMap(i);
+				MapBox.setPosition(MAPS[i].getPosition());
 				break;
 			}
 
 		if (mouseclickbutton(mouseposOptions, BackButton) == true) {
+			ButtonClickSound.play();
 			OptionsWindow.clear(); OptionsWindow.close(); 
 			MainMenu.setVisible(true); MainMenu.setActive(true);
 			sf::Time sleepTime = sf::milliseconds(200);
@@ -281,12 +315,18 @@ void OptionsWindowEngine(sf::RenderWindow &OptionsWindow)
 		OptionsWindow.draw(playerTanksbackup[i]);
 	for (int j = 0; j < 3; j++)
 		OptionsWindow.draw(MAPS[j]);
+
+	OptionsWindow.draw(DifficultyBox);
+	OptionsWindow.draw(NumbersBox);
+	OptionsWindow.draw(MapBox);
+
 	OptionsWindow.display();
 	OptionsWindow.clear(sf::Color(132, 137, 201));
 }
 
 void SinglePlayerEngine(sf::RenderWindow &GameWindow) 
 {
+	ButtonClickSound.play();
 	GameWindow.setFramerateLimit(450);
 	Bots bot[7];
 	int botLife[7];

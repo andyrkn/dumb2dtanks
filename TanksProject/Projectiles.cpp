@@ -5,6 +5,7 @@
 Projectiles::Projectiles(sf::Vector2f pos, int dir)
 {
 	_loadProjectileTexture();
+	TankFireWAV.play();
 	this->dir = dir;
 	sprite.setTexture(ProjectileTexturegg);
 	sprite.setPosition(pos);

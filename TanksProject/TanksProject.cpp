@@ -31,6 +31,7 @@ int main()
 				MainMenu.close();
 			
 			if (mouseclickbutton(mousepos, OptionsButton) == true) {
+				ButtonClickSound.play();
 				sf::RenderWindow OptionsWindow(sf::VideoMode(1000, 600), "Options", sf::Style::Close);
 			
 				MainMenu.setVisible(false);

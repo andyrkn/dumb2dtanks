@@ -71,7 +71,7 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 	Frames++;
 	ReloadTime++;
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && Frames>90)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && Frames>200)
 	{
 		ReloadTime = 0;
 		Frames = 0;
