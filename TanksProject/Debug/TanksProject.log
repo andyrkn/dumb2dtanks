@@ -1,11 +1,18 @@
-﻿  Bots.cpp
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(91): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(173): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(218): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(320): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(182): warning C4101: 'botX': unreferenced local variable
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(332): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(346): warning C4018: '<': signed/unsigned mismatch
-c:\users\rakuens\documents\tanksrepository\tanksproject\bots.cpp(476): warning C4101: 'k': unreferenced local variable
+﻿  TanksProject.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(149): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(278): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankheader.h(356): warning C4996: 'sf::Text::setColor': was declared deprecated
+  c:\sfml-2.4.1\include\sfml\graphics\text.hpp(177): note: see declaration of 'sf::Text::setColor'
+  TankPlayer.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(93): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(101): warning C4018: '<': signed/unsigned mismatch
+c:\users\rakuens\documents\tanksrepository\tanksproject\tankplayer.cpp(112): warning C4018: '<': signed/unsigned mismatch
+  Projectiles.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\projectiles.cpp(58): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Bots.cpp
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Debug\TanksProject.pdb (Full PDB)

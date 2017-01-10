@@ -72,7 +72,7 @@ Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int
 bool EasyDifficulty = true, NormalDifficulty = false, HardDifficulty = false;
 int BotsNumber = 3;
 int ct;
-bool currentTankSelectedBool = false, mapSelected = false;
+bool currentTankSelectedBool = false, mapSelected = false, Player2Selected = false;
 
 // RENDER WINDOWS 
 
@@ -94,8 +94,8 @@ sf::RectangleShape playerTanksbackup[5], playerTanks[5], MAPS[3];
 sf::Vector2f baserectangle = sf::Vector2f(100.0f, 50.0f);
 sf::Vector2f largerRectangle = sf::Vector2f(200.0f, 100.0f);
 sf::Vector2f tankVector = sf::Vector2f(60.0f, 42.0f);
-sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle), CurrentTankTXT(baserectangle);
-sf::RectangleShape currentTank(baserectangle);
+sf::RectangleShape ExitButton(baserectangle), SingleplayerButton(largerRectangle), CurrentTankTXT(baserectangle), Player2CurrentTankBox(baserectangle);
+sf::RectangleShape currentTank(baserectangle), Player2Tank(baserectangle);
 sf::RectangleShape EasyButton(largerRectangle), NormalButton(largerRectangle), HardButton(largerRectangle);
 sf::RectangleShape SelectMapButton(largerRectangle), DifficultyButton(largerRectangle);
 sf::RectangleShape OptionsButton(largerRectangle), SurvivalButton(largerRectangle), PvPButton(largerRectangle);
@@ -104,7 +104,7 @@ sf::RectangleShape Nr1B(baserectangle), Nr2B(baserectangle), Nr3B(baserectangle)
 sf::RectangleShape NumbersBox(baserectangle), DifficultyBox(largerRectangle), MapBox(sf::Vector2f(160.0f,80.0f));
 sf::Texture ExitButtonText, SingpleButtonText, CurrentTankTexture, OptionsText, SurvivalText, PvPText;
 sf::Texture BackButtonText, SelectTankText, NrOfBotsText;
-sf::Texture currentTextureSel, SelectMapText;
+sf::Texture currentTextureSel, SelectMapText, Player2SelectedTexture, Player2TextureButton;
 sf::Texture Nr1BText, Nr2BText, Nr3BText, Nr4BText, Nr5BText;
 sf::Texture EasyText, NormalText, HardText, DifficultyText;
 sf::Texture SmallBoxTexture, LargeBoxTexture;
@@ -130,7 +130,7 @@ void LoadVariables()
 	SelectMapButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	DifficultyBox.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
 	NumbersBox.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
-
+	Player2CurrentTankBox.setOrigin(baserectangle.x / 2, baserectangle.y / 2);
 	MapBox.setOrigin(80.0f, 40.0f);
 
 	DifficultyButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
@@ -147,6 +147,7 @@ void LoadVariables()
 	ExitButton.setPosition(200.0f, 500.0f);
 	SingleplayerButton.setPosition(200.0f, 100.0f);
 	CurrentTankTXT.setPosition(MainMenu.getSize().x / 2 + 200, 480.0f);
+	Player2CurrentTankBox.setPosition(MainMenu.getSize().x / 2 + 200, 530.0f);
 	OptionsButton.setPosition(200.0f, 400.0f);
 	SurvivalButton.setPosition(200.0f, 200.0f);
 	PvPButton.setPosition(200.0f, 300.0f);
@@ -173,6 +174,7 @@ void LoadVariables()
 	ExitButtonText.loadFromFile("Textures/MenuText.png");
 	SingpleButtonText.loadFromFile("Textures/SingleplayerText.png");
 	CurrentTankTexture.loadFromFile("Textures/CurrentTankTXT.png");
+	Player2TextureButton.loadFromFile("Textures/Player2TXT.png");
 	SurvivalText.loadFromFile("Textures/Survival.png");
 	OptionsText.loadFromFile("Textures/OptionsText.png");
 	PvPText.loadFromFile("Textures/PvPText.png");
@@ -198,6 +200,7 @@ void LoadVariables()
 	ExitButton.setTexture(&ExitButtonText);
 	SingleplayerButton.setTexture(&SingpleButtonText);
 	CurrentTankTXT.setTexture(&CurrentTankTexture);
+	Player2CurrentTankBox.setTexture(&Player2TextureButton);
 	SurvivalButton.setTexture(&SurvivalText);
 	OptionsButton.setTexture(&OptionsText);
 	PvPButton.setTexture(&PvPText);
@@ -299,6 +302,22 @@ void OptionsWindowEngine(sf::RenderWindow &OptionsWindow)
 		}
 	}
 
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+		sf::Vector2i mouseposOptions = sf::Mouse::getPosition(OptionsWindow);
+
+		for (int st = 0; st < 5; st++)  // tank selection
+			if (mouseclickbutton(mouseposOptions, playerTanksbackup[st]) == true) {
+				ButtonClickSound.play();
+				sf::sleep(sf::milliseconds(200));
+				Player2Tank = playerTanksbackup[st];
+				Player2SelectedTexture = playerTankTextures[st];
+				Player2Tank.setPosition(MainMenu.getSize().x/2+300, 525.0f);
+				Player2Selected = true;
+				break;
+			}
+	}
+
+	OptionsWindow.draw(Player2CurrentTankBox);
 	OptionsWindow.draw(NrOfBotsButton);
 	OptionsWindow.draw(BackButton);
 	OptionsWindow.draw(SelectTankButton);
@@ -311,6 +330,8 @@ void OptionsWindowEngine(sf::RenderWindow &OptionsWindow)
 	OptionsWindow.draw(DifficultyButton);
 	if (currentTankSelectedBool)
 		OptionsWindow.draw(currentTank);
+	if (Player2Selected)
+		OptionsWindow.draw(Player2Tank);
 	for (int i = 0; i < 5; i++)
 		OptionsWindow.draw(playerTanksbackup[i]);
 	for (int j = 0; j < 3; j++)
@@ -334,7 +355,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	sf::RectangleShape PlayerGameTank = currentTank;
 
 	PlayerGameTank.setPosition(100.0f, 100.0f);
-	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f);
+	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f,1);
 
 	int used[] = { 0,0,0,0,0,0,0,0 };
 
@@ -349,8 +370,8 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	sf::Clock clock;
 
 
-	sf::Font font;
 	sf::Text PlayerHPtext;
+	sf::Font font;
 	font.loadFromFile("arial.ttf");
 	PlayerHPtext.setFont(font);
 	PlayerHPtext.setColor(sf::Color(108, 193, 129));
@@ -408,11 +429,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 
 		PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
 		string HPstring = "PlayerHP : ";
-		if (player1.tankHP == 1) HPstring.push_back('1');
-		if (player1.tankHP == 2) HPstring.push_back('2');
-		if (player1.tankHP == 3) HPstring.push_back('3');
-		if (player1.tankHP == 4) HPstring.push_back('4');
-		if (player1.tankHP == 5) HPstring.push_back('5');
+		HPstring.push_back((char)player1.tankHP+48);
 		PlayerHPtext.setString(HPstring);
 		GameWindow.draw(PlayerHPtext);
 
@@ -420,9 +437,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 
 		PlayerHPtext.setPosition(sf::Vector2f(1000.0f, 10.0f));
 		HPstring = "Enemy HP : ";
-		if (bot[0].tankHP == 1) HPstring.push_back('1');
-		if (bot[0].tankHP == 2) HPstring.push_back('2');
-		if (bot[0].tankHP == 3) HPstring.push_back('3');
+		HPstring.push_back((char)bot[0].tankHP + 48);
 		PlayerHPtext.setString(HPstring);
 		GameWindow.draw(PlayerHPtext);
 
@@ -434,4 +449,92 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 
 	}
 	MainMenu.setVisible(true);
+}
+
+void PvPEngine(sf::RenderWindow &PvPWindow) 
+{
+	PvPWindow.setFramerateLimit(450);
+	sf::RectangleShape PlayerGameTank = currentTank;
+	PlayerGameTank.setPosition(100.0f, 100.0f);
+
+	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1);
+
+	sf::RectangleShape PlayerGameTank2 = Player2Tank;
+	PlayerGameTank2.setPosition(1100.0f, 500.0f);
+	TankPlayer player2(PlayerGameTank2, &Player2SelectedTexture, 2, 0.2f, 2);
+
+
+
+	float delta = 0.0f;
+	sf::Clock clock;
+
+
+	sf::Text PlayerHPtext;
+	sf::Font font;
+	font.loadFromFile("arial.ttf");
+	PlayerHPtext.setFont(font);
+	PlayerHPtext.setColor(sf::Color(108, 193, 129));
+	PlayerHPtext.setStyle(sf::Text::Bold);
+	PlayerHPtext.setCharacterSize(24);
+	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
+
+	std::string HPstring;
+
+	int botLife[] = { 0,0,0,0,0,0};
+	sf::Vector2f botPos[4];
+	for (int botPositions = 0; botPositions < 4; botPositions++) {
+		botPos[botPositions].x = 0;
+		botPos[botPositions].y = 0;
+	}
+
+	while (PvPWindow.isOpen()) {
+		delta = clock.restart().asSeconds();
+		sf::Event evnt2;
+		while (PvPWindow.pollEvent(evnt2))
+		{
+			switch (evnt2.type)
+			{
+			case evnt2.Closed: {
+				MainMenu.setVisible(true);
+				sf::Time sleepTime = sf::milliseconds(200);
+				PvPWindow.clear(); PvPWindow.close();
+				sf::sleep(sleepTime);
+			}
+			}
+		}
+
+		botPos[0] = player2.GetPosition();
+		botLife[0] = player2.tankHP;
+		player1.Update(delta, Map, botPos, botLife);
+		player2.tankHP = botLife[0];
+
+		botPos[0] = player1.GetPosition();
+		botLife[0] = player1.tankHP;
+		player2.Update(delta, Map, botPos, botLife);
+		player1.tankHP = botLife[0];
+
+		if (player2.tankHP == 0 || player1.tankHP == 0) {
+			PvPWindow.close(); MainMenu.setVisible(true);
+		}
+
+		HPstring = "Player 1 HP : ";
+		HPstring.push_back((char)player1.tankHP + 48);
+		PlayerHPtext.setString(HPstring);
+		PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
+		PvPWindow.draw(PlayerHPtext);
+
+		HPstring = "Player 2 HP : ";
+		HPstring.push_back((char)player2.tankHP + 48);
+		PlayerHPtext.setString(HPstring);
+		PlayerHPtext.setPosition(sf::Vector2f(990.0f, 10.0f));
+		PvPWindow.draw(PlayerHPtext);
+
+
+		player1.draw(PvPWindow);
+		player2.draw(PvPWindow);
+		Map.draw(PvPWindow);
+		PvPWindow.display();
+		PvPWindow.clear(sf::Color(230, 230, 230));
+	}
+
 }

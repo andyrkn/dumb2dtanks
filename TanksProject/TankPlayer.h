@@ -9,8 +9,9 @@ using namespace std;
 class TankPlayer
 {
 public:
-	TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime);
+	TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime,short KeyPriority);
 	~TankPlayer();
+
 	void Update(float delta, Maps map, sf::Vector2f botPos[4], int botLife[4]);
 	void draw(sf::RenderWindow& window);
 	bool checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]);
@@ -27,6 +28,8 @@ private:
 	int ReloadTime = 0;
 	bool directionUp = false;
 	bool directionDown = false;
+
+	short KeyPriority = 0;
 };
 
 

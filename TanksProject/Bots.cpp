@@ -31,7 +31,7 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 	if (tankHP) {
 
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
-		float speed = 0.25f;
+		float speed = 0.15f;
 		if (startUp)   {	upOnly    = true; tankBody.move(0.0f, -speed);   }	else
 		if (startDown) {	downOnly  = true; tankBody.move(0.0f, speed);    }	else
 		if (direction) {	rightOnly = true; tankBody.move(speed, 0.0f);	}	else
@@ -89,7 +89,7 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 
 		if (ReloadTime > 900) PVector.clear();
 		for (int i = 0; i < PVector.size(); i++)
-			PVector[i].fire(1.5);
+			PVector[i].fire(0.7f);
 	}
 }
 
@@ -98,7 +98,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 {
 	if (tankHP) {
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
-		float speed = 0.25f;
+		float speed = 0.20f;
 		if (startUp) { upOnly = true; tankBody.move(0.0f, -speed); }else
 		if (startDown) { downOnly = true; tankBody.move(0.0f, speed); }	else
 		if (direction) { rightOnly = true; tankBody.move(speed, 0.0f); }else
@@ -171,7 +171,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 		PVector.clear();
 
 	for (int i = 0; i < PVector.size(); i++)
-		PVector[i].fire(1.5);
+		PVector[i].fire(1.0f);
 }
 
 
@@ -212,7 +212,7 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 				startUp = false; startDown = false; direction = true; downOnly = false; upOnly = false;}
 			createbullet(upOnly, downOnly);
 		}
-		//==========================SWAG
+		//==========================DODGE
 		int bi;
 
 		for (bi = 0; bi < PlayerBullets.size(); bi++)
@@ -296,7 +296,7 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 			}
 		}
 
-		//=============================
+		//============================= ANIMATION + BULLET FIRE
 		animation.Update(delta, direction);
 		this->tankBody.setTextureRect(animation.currentTexture);
 

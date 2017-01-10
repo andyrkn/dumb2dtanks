@@ -1,12 +1,12 @@
 #include "TankPlayer.h"
 
 
-TankPlayer::TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime) :
+TankPlayer::TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime,short KeyPriority) :
 	animation(texture,imageCount, switchTime)
 {
 	this->tankBody = tankBody;
 	this->tankBody.setOrigin(sf::Vector2f(this->tankBody.getSize().x / 2, this->tankBody.getSize().y / 2));
-
+	this->KeyPriority = KeyPriority;
 }
 
 
@@ -14,21 +14,35 @@ TankPlayer::~TankPlayer()
 {
 }
 
+
+
 void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLife[4])
 {
 	this->tankBody.setRotation(0);
 	
 	float speed = 0.25f;
-	
 	bool didItMove=false, rightOnly=false, leftOnly = false, upOnly = false, downOnly = false, didItMoveOx=false, didItMoveOy=false;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-speed, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; didItMoveOx = true; }
-	if(!didItMove)
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, speed); directionUp = false; directionDown = true; downOnly = true; didItMove = true; direction = false; didItMoveOy = true; }
-	if(!didItMove)
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(speed, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
-	if(!didItMove)
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -speed); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
 
+	// PLAYER NUMBER 1 || 2
+	if (KeyPriority == 1) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) { this->tankBody.move(-speed, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; didItMoveOx = true; }
+		if (!didItMove)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) { this->tankBody.move(0.0f, speed); directionUp = false; directionDown = true; downOnly = true; didItMove = true; direction = false; didItMoveOy = true; }
+		if (!didItMove)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { this->tankBody.move(speed, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
+		if (!didItMove)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { this->tankBody.move(0.0f, -speed); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
+	}
+	if (KeyPriority == 2) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) { this->tankBody.move(-speed, 0.0f);  directionUp = false; directionDown = false; leftOnly = true; direction = false; didItMove = true; didItMoveOx = true; }
+		if (!didItMove)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) { this->tankBody.move(0.0f, speed); directionUp = false; directionDown = true; downOnly = true; didItMove = true; direction = false; didItMoveOy = true; }
+		if (!didItMove)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) { this->tankBody.move(speed, 0.0f); directionUp = false; directionDown = false; rightOnly = true; direction = true; didItMove = true; }
+		if (!didItMove)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) { this->tankBody.move(0.0f, -speed); directionUp = true; directionDown = false;  upOnly = true; didItMove = true; direction = false; }
+
+	}
 	if (checkColission(map, botPos, botLife))
 	{
 		if (rightOnly && upOnly)
@@ -71,7 +85,9 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 	Frames++;
 	ReloadTime++;
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && Frames>200)
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)&& KeyPriority==1 )
+		|| (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Delete) && KeyPriority==2)) 
+		if(Frames>200)
 	{
 		ReloadTime = 0;
 		Frames = 0;
@@ -83,7 +99,7 @@ void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLi
 
 		Projectiles bullet(this->tankBody.getPosition(), dir);
 		PVector.push_back(bullet);
-	}
+		}
 
 	if (ReloadTime > 900) {
 		PVector.clear();
@@ -127,6 +143,7 @@ bool TankPlayer::checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]
 		}
 		if(!gone)
 		for (k = 0; k < 5; k++)
+			if(botLife[k])
 		{
 			if (PVector[j].getPos().x >= botPos[k].x - 30.0f && PVector[j].getPos().x <= botPos[k].x + 30.0f)
 				if (PVector[j].getPos().y >= botPos[k].y - 21.0f && PVector[j].getPos().y <= botPos[k].y + 21.0f)
@@ -136,6 +153,7 @@ bool TankPlayer::checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]
 					break;
 				}
 		}
+			
 	}
 	for (k = 0; k < 5; k++)
 		if(botLife[k])

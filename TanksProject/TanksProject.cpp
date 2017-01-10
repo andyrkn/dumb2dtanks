@@ -29,18 +29,18 @@ int main()
 
 			if (mouseclickbutton(mousepos, ExitButton) == true)
 				MainMenu.close();
-			
+
 			if (mouseclickbutton(mousepos, OptionsButton) == true) {
 				ButtonClickSound.play();
 				sf::RenderWindow OptionsWindow(sf::VideoMode(1000, 600), "Options", sf::Style::Close);
-			
+
 				MainMenu.setVisible(false);
 				MainMenu.setActive(false);
-	
-				while (OptionsWindow.isOpen()) 
+
+				while (OptionsWindow.isOpen())
 					OptionsWindowEngine(OptionsWindow);
 
-				}
+			}
 
 			if (!mapSelected)
 				Map.selectMap(100);
@@ -51,6 +51,15 @@ int main()
 				sf::RenderWindow GameWindow(sf::VideoMode(1200, 600), "Tanks", sf::Style::Close);
 				SinglePlayerEngine(GameWindow);
 			}
+
+			if (currentTankSelectedBool == true && Player2Selected == true
+				&& mouseclickbutton(mousepos, PvPButton) == true) {
+				MainMenu.setVisible(false);
+				sf::RenderWindow PvPWindow(sf::VideoMode(1200, 600), "PvP", sf::Style::Close);
+				PvPEngine(PvPWindow);
+				MainMenu.setVisible(true);
+			}
+		
 
 		}
 
