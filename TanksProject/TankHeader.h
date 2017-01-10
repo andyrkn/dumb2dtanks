@@ -54,7 +54,7 @@ bool mouseclickbutton(sf::Vector2i MousePos, sf::RectangleShape button)
 }
 
 
-Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int ct)
+Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int ct, int levelDifficulty)
 {
 	int x;
 	while (true) {
@@ -62,6 +62,7 @@ Bots createbot(sf::RectangleShape bodys[], sf::Texture textures[],int used[],int
 		if (used[x] == 0 && (x-1)!=ct) {
 			Bots b(bodys[x - 1], &textures[x - 1], 2, 0.2f);
 			used[x] = 1;
+			b.setDificulty(levelDifficulty);
 			return b;
 		}
 	}
@@ -73,6 +74,7 @@ bool EasyDifficulty = true, NormalDifficulty = false, HardDifficulty = false;
 int BotsNumber = 3;
 int ct;
 bool currentTankSelectedBool = false, mapSelected = false, Player2Selected = false;
+int Score = 0;
 
 // RENDER WINDOWS 
 
@@ -87,7 +89,6 @@ sf::Sound ButtonClickSound;
 
 sf::Texture playerTankTextures[5], mapsTextures[3];
 sf::RectangleShape playerTanksbackup[5], playerTanks[5], MAPS[3];
-
 
 // STANDARD VECTORS FOR SIZES
 
@@ -112,6 +113,27 @@ sf::Texture SmallBoxTexture, LargeBoxTexture;
 // MAP
 
 Maps Map;
+
+bool freeSpace(Bots bots[4], TankPlayer player1, sf::Vector2f v, int noBots)
+{
+	int it, deltaX, deltaY, intersectX, intersectY;
+	for (it = 0; it < noBots; it++)
+	{
+		deltaX = abs(bots[it].GetPosition().x - v.x);
+		deltaY = abs(bots[it].GetPosition().y - v.y);
+		intersectX = deltaX - 65.0f;
+		intersectY = deltaY - 65.0f;
+		if (intersectX < 0.0f && intersectY < 0.0f)
+			return false;
+	}
+	deltaX = abs(player1.GetPosition().x - v.x);
+	deltaY = abs(player1.GetPosition().y - v.y);
+	intersectX = deltaX - 65.0f;
+	intersectY = deltaY - 65.0f;
+	if (intersectX < 0.0f && intersectY < 0.0f)
+		return false;
+	return true;
+}
 
 void LoadVariables()
 {
@@ -364,7 +386,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	sf::Vector2f botPos[4];
 
 	for (int bots = 0; bots < BotsNumber; bots++)
-		bot[bots] = createbot(playerTanksbackup, playerTankTextures, used, ct);
+		bot[bots] = createbot(playerTanksbackup, playerTankTextures, used, ct, 0);
 
 	float delta = 0.0f;
 	sf::Clock clock;
@@ -537,4 +559,205 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 		PvPWindow.clear(sf::Color(230, 230, 230));
 	}
 
+}
+
+void SurvivalEngine(sf::RenderWindow &GameWindow)
+{
+	ButtonClickSound.play();
+	GameWindow.setFramerateLimit(450);
+	int botLife[7], botLifeAux[7];
+
+	sf::RectangleShape PlayerGameTank = currentTank;
+
+	PlayerGameTank.setPosition(570.0f, 270.0f);
+	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1);
+	player1.tankHP = 5;
+	int x, noHardBots = 0;
+	sf::Vector2f botPos[4];
+	Bots bots[4];
+	int used[] = { 0,0,0,0,0,0,0 };
+	for (int ibot = 0; ibot < BotsNumber; ibot++)
+	{
+		while (true)
+		{
+			x = rand() % 3 + 1;
+			if (x != 3) {
+				bots[ibot].setDificulty(x);
+				break;
+			}
+			else if (noHardBots < 2)
+			{
+				bots[ibot].setDificulty(x);
+				noHardBots++;
+				break;
+			}
+		}
+		bots[ibot] = createbot(playerTanksbackup, playerTankTextures, used, ct, x);
+		while (true)
+		{
+			x = rand() % 4 + 1;
+			if (x == 1)
+			{
+				if (freeSpace(bots, player1, sf::Vector2f(1135.0f, 65.0f), ibot))
+				{
+					bots[ibot].setPosition(sf::Vector2f(1135.0f, 65.0f));
+					break;
+				}
+			}
+			else if (x == 2)
+			{
+				if (freeSpace(bots, player1, sf::Vector2f(1135.0f, 535.0f), ibot))
+				{
+					bots[ibot].setPosition(sf::Vector2f(1135.0f, 535.0f));
+					break;
+				}
+			}
+			else if (x == 3)
+			{
+				if (freeSpace(bots, player1, sf::Vector2f(65.0f, 535.0f), ibot))
+				{
+					bots[ibot].setPosition(sf::Vector2f(65.0f, 535.0f));
+					break;
+				}
+			}
+			else
+			{
+				if (freeSpace(bots, player1, sf::Vector2f(65.0f, 65.0f), ibot))
+				{
+					bots[ibot].setPosition(sf::Vector2f(65.0f, 65.0f));
+					break;
+				}
+			}
+		}
+	}
+	float delta = 0.0f;
+	sf::Clock clock;
+	sf::Font font;
+	sf::Text PlayerHPtext;
+	font.loadFromFile("arial.ttf");
+	PlayerHPtext.setFont(font);
+	PlayerHPtext.setColor(sf::Color(108, 193, 129));
+	PlayerHPtext.setStyle(sf::Text::Bold);
+	PlayerHPtext.setCharacterSize(24);
+	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
+	while (GameWindow.isOpen())
+	{
+		int ib, tankLife;
+		delta = clock.restart().asSeconds();
+		sf::Event evnt1;
+
+		while (GameWindow.pollEvent(evnt1))
+		{
+			if (evnt1.type == evnt1.Closed) {
+				GameWindow.close();
+				GameWindow.clear();
+			}
+		}
+
+		for (ib = 0; ib < BotsNumber; ib++)
+		{
+			botPos[ib] = bots[ib].GetPosition();
+			botLife[ib] = bots[ib].tankHP;
+		}
+
+		player1.Update(delta, Map, botPos, botLife);
+		for (ib = 0; ib < BotsNumber; ib++)
+		{
+			tankLife = player1.tankHP;
+			bots[ib].tankHP = botLife[ib];
+			if (bots[ib].tankHP)
+			{
+				if (bots[ib].getDificulty() == 1)	
+					bots[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+				if (bots[ib].getDificulty() == 2)	
+					bots[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+				if (bots[ib].getDificulty() == 3)	
+					bots[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets());
+				bots[ib].draw(GameWindow);
+			}
+			else
+			{
+				player1.tankHP++;
+				tankLife++;
+				if (bots[ib].getDificulty() == 3)
+				{
+					noHardBots--;
+					Score += 15;
+				}
+				else if (bots[ib].getDificulty() == 2)
+					Score += 10;
+				else
+					Score += 5;
+				while (true)
+				{
+					x = rand() % 3 + 1;
+					if (x != 3) {
+						bots[ib].setDificulty(x);
+						break;
+					}
+					else if (noHardBots < 2)
+					{
+						bots[ib].setDificulty(x);
+						noHardBots++;
+						break;
+					}
+				}
+				bots[ib].changePos(2000.0f);
+				while (true)
+				{
+					x = rand() % 4 + 1;
+					if (x == 1)
+					{
+						if (freeSpace(bots, player1, sf::Vector2f(1135.0f, 65.0f), BotsNumber))
+						{
+							bots[ib].setPosition(sf::Vector2f(1135.0f, 65.0f));
+							break;
+						}
+					}
+					else if (x == 2)
+					{
+						if (freeSpace(bots, player1, sf::Vector2f(1135.0f, 535.0f), BotsNumber))
+						{
+							bots[ib].setPosition(sf::Vector2f(1135.0f, 535.0f));
+							break;
+						}
+					}
+					else if (x == 3)
+					{
+						if (freeSpace(bots, player1, sf::Vector2f(65.0f, 535.0f), BotsNumber))
+						{
+							bots[ib].setPosition(sf::Vector2f(65.0f, 535.0f));
+							break;
+						}
+					}
+					else
+					{
+						if (freeSpace(bots, player1, sf::Vector2f(65.0f, 65.0f), BotsNumber))
+						{
+							bots[ib].setPosition(sf::Vector2f(65.0f, 65.0f));
+							break;
+						}
+					}
+					botLife[ib] = 3;
+				}
+			}
+			player1.tankHP = tankLife;
+			if (!player1.tankHP)GameWindow.close();
+		}
+		PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
+		string HPstring = "PlayerHP : ";
+		if (player1.tankHP == 1) HPstring.push_back('1');
+		if (player1.tankHP == 2) HPstring.push_back('2');
+		if (player1.tankHP == 3) HPstring.push_back('3');
+		if (player1.tankHP == 4) HPstring.push_back('4');
+		if (player1.tankHP == 5) HPstring.push_back('5');
+		PlayerHPtext.setString(HPstring);
+		GameWindow.draw(PlayerHPtext);
+
+		player1.draw(GameWindow);
+		Map.draw(GameWindow);
+		GameWindow.display();
+		GameWindow.clear(sf::Color(230, 230, 230));
+	}
+	MainMenu.setVisible(true);
 }

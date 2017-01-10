@@ -21,15 +21,18 @@ public:
 	void changePos(float delta);
 	bool Bots::checkColissionHard(Maps map, sf::Vector2f BotsPos[], int nrBot, bool directionUp, bool directionDown, bool directionLeft, bool directionRight, float delta);
 	int tankHP = 3;
+	int getDificulty();
+	void setDificulty(int level);
+	void setPosition(sf::Vector2f v);
 
 private:
 
 	void setdirection(bool upOnly, bool downOnly, bool rightOnly, bool leftOnly);
 	void createbullet(bool upOnly,bool downOnly);
-
 	sf::RectangleShape tankBody;
 	Animation animation;
 	vector<Projectiles> PVector;
+	int dificultyLevel;
 	bool startUp = false;
 	bool startDown = false;
 	bool direction = false;

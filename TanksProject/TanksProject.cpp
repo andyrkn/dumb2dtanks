@@ -60,6 +60,14 @@ int main()
 				MainMenu.setVisible(true);
 			}
 		
+			if (currentTankSelectedBool == true && mouseclickbutton(mousepos, SurvivalButton) == true)
+			{
+				MainMenu.setVisible(false);
+				MainMenu.setActive(false);
+				sf::RenderWindow SurvivalWindow(sf::VideoMode(1200, 600), "Tanks", sf::Style::Close);
+				SurvivalEngine(SurvivalWindow);
+				MainMenu.setActive(true);
+			}
 
 		}
 

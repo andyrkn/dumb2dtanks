@@ -516,3 +516,28 @@ bool Bots::checkColissionHard(Maps map, sf::Vector2f BotsPos[],int nrBot, bool d
 		this->tankBody.move(-delta, 0.0f);
 	return coliding;
 }
+
+
+int Bots::getDificulty()
+{
+	return dificultyLevel;
+}
+
+
+void Bots::setDificulty(int level)
+{
+	dificultyLevel = level;
+}
+
+
+void Bots::setPosition(sf::Vector2f v)
+{
+	this->tankBody.setPosition(v);
+	tankHP = 2;
+	int x = rand() % 4 + 1;
+
+	if (x == 1) direction = true; else
+		if (x == 2) startDown = true; else
+			if (x == 3) direction = false; else
+				if (x == 4) startUp = true;
+}
