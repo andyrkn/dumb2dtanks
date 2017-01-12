@@ -5,7 +5,7 @@ int main()
 {
 	// HIDE CONSOLE
 
-	//ShowWindow(GetConsoleWindow(), SW_HIDE);
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
 
 	// -- GLOBAL LOAD
 

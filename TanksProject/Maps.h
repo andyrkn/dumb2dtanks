@@ -1,9 +1,5 @@
 #pragma once
 #include "SFML\Graphics.hpp"
-#include <vector>
-#include <set>
-using namespace std;
-
 class Maps
 {
 public:
@@ -19,6 +15,5 @@ public:
 private:
 	sf::RectangleShape walls[10];
 	unsigned int noWalls;
-	vector< pair<int, int> >MAP[66];
 };
 
