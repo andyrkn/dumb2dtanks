@@ -4,6 +4,7 @@
 #include <vector>
 #include "Projectiles.h"
 #include "Maps.h"
+#include "Explosion.h"
 using namespace std;
 
 class Bots
@@ -29,8 +30,8 @@ private:
 
 	void setdirection(bool upOnly, bool downOnly, bool rightOnly, bool leftOnly);
 	void createbullet(bool upOnly,bool downOnly);
+
 	sf::RectangleShape tankBody;
-	Animation animation;
 	vector<Projectiles> PVector;
 	int dificultyLevel;
 	bool startUp = false;
@@ -38,5 +39,8 @@ private:
 	bool direction = false;
 	int Frames = 90;
 	int ReloadTime = 0;
+
+	Animation animation;
+	Explosion explo;
 };
 

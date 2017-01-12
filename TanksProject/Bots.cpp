@@ -7,7 +7,7 @@ Bots::Bots():
 
 }
  
-Bots::Bots(sf::RectangleShape tankBody, sf::Texture * texture, int imageCount, float switchTime):
+Bots::Bots(sf::RectangleShape tankBody, sf::Texture * texture, int imageCount, float switchTime) :
 	animation(texture, imageCount, switchTime)
 {
 	this->tankBody = tankBody;
@@ -91,6 +91,11 @@ void Bots::UpdateEasy(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 		for (int i = 0; i < PVector.size(); i++)
 			PVector[i].fire(0.7f);
 	}
+	else {
+		if (!explo.positionSet) explo.setExplosionPosition(this->tankBody.getPosition());
+		if(explo.isExploding)
+			explo.UpdateExplosion(delta);
+	}
 }
 
 
@@ -99,10 +104,15 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 	if (tankHP) {
 		bool leftOnly = false, upOnly = false, downOnly = false, rightOnly = false;
 		float speed = 0.20f;
-		if (startUp) { upOnly = true; tankBody.move(0.0f, -speed); }else
-		if (startDown) { downOnly = true; tankBody.move(0.0f, speed); }	else
-		if (direction) { rightOnly = true; tankBody.move(speed, 0.0f); }else
-			{	leftOnly = true; tankBody.move(-speed, 0.0f);	}
+		if (startUp) { upOnly = true; tankBody.move(0.0f, -speed); }
+		else
+			if (startDown) { downOnly = true; tankBody.move(0.0f, speed); }
+			else
+				if (direction) { rightOnly = true; tankBody.move(speed, 0.0f); }
+				else
+				{
+					leftOnly = true; tankBody.move(-speed, 0.0f);
+				}
 
 		Frames++; ReloadTime++;
 		//===================
@@ -110,7 +120,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 		float botX = this->tankBody.getPosition().x;
 		float botY = this->tankBody.getPosition().y;
 
-		if (PlayerPos.x - 30 < botX && PlayerPos.x + 30 > botX && Frames>450) {
+		if (PlayerPos.x - 30 < botX && PlayerPos.x + 30 > botX && Frames > 450) {
 			if (PlayerPos.y < botY) {
 				startUp = true; startDown = false; upOnly = true; startDown = false;
 			}
@@ -121,7 +131,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 		}
 
 		if (PlayerPos.y - 21 < botY && PlayerPos.y + 21 > botY && Frames > 450) {
-			if(PlayerPos.x < botX) {
+			if (PlayerPos.x < botX) {
 				startUp = false; startDown = false; direction = false; downOnly = false; upOnly = false;
 			}
 			else {
@@ -130,7 +140,7 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 
 			createbullet(upOnly, downOnly);
 		}
-	
+
 		//==================
 		if (checkColission(map, PlayerPos, BotsPos, ib, isDead))
 		{
@@ -165,13 +175,19 @@ void Bots::UpdateNormal(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vecto
 				this->tankBody.setRotation(90);
 		}
 
+
+
+		if (ReloadTime > 600)
+			PVector.clear();
+
+		for (int i = 0; i < PVector.size(); i++)
+			PVector[i].fire(1.0f);
 	}
-
-	if (ReloadTime > 600)
-		PVector.clear();
-
-	for (int i = 0; i < PVector.size(); i++)
-		PVector[i].fire(1.0f);
+	else {
+		if (!explo.positionSet) explo.setExplosionPosition(this->tankBody.getPosition());
+		if (explo.isExploding)
+			explo.UpdateExplosion(delta);
+	}
 }
 
 
@@ -321,6 +337,11 @@ void Bots::UpdateHard(float delta, Maps map, sf::Vector2f PlayerPos, sf::Vector2
 		PVector[i].fire(1.5f);
 
 	}
+	else {
+		if (!explo.positionSet) explo.setExplosionPosition(this->tankBody.getPosition());
+		if (explo.isExploding)
+			explo.UpdateExplosion(delta);
+	}
 }
 
 
@@ -333,6 +354,9 @@ void Bots::draw(sf::RenderWindow & window)
 			PVector[i].draw(window);
 
 	}
+	else
+		if (explo.isExploding)
+			explo.draw(window);
 }
 
 

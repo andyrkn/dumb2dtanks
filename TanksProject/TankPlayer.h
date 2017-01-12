@@ -4,6 +4,8 @@
 #include <vector>
 #include "Projectiles.h"
 #include "Maps.h"
+#include "Explosion.h"
+
 using namespace std;
 
 class TankPlayer
@@ -15,13 +17,13 @@ public:
 	void Update(float delta, Maps map, sf::Vector2f botPos[4], int botLife[4]);
 	void draw(sf::RenderWindow& window);
 	bool checkColission(Maps map, sf::Vector2f botPos[4], int botLife[4]);
+	void kill();
 	int tankHP = 3;
 	sf::Vector2f GetPosition();
 	vector<Projectiles> getBullets();
 	
 private:
 	sf::RectangleShape tankBody;
-	Animation animation;
 	bool direction;
 	vector<Projectiles> PVector;
 	int Frames = 90;
@@ -29,7 +31,10 @@ private:
 	bool directionUp = false;
 	bool directionDown = false;
 
-	short KeyPriority = 0;
+	short KeyPriority = 0;	
+	
+	Animation animation;
+	Explosion explo;
 };
 
 

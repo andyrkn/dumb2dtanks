@@ -1,9 +1,30 @@
-﻿  Maps.cpp
-Maps.cpp(61): warning C4018: '<': signed/unsigned mismatch
+﻿  TanksProject.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(127): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(128): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(129): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(130): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(134): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(135): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(136): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(137): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(176): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(177): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(315): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(348): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(411): warning C4996: 'sf::Text::setColor': was declared deprecated
+  C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(397): warning C4101: 'EndOfGame': unreferenced local variable
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(511): warning C4996: 'sf::Text::setColor': was declared deprecated
+  C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(660): warning C4996: 'sf::Text::setColor': was declared deprecated
+  C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
+c:\users\rakuens\documents\tanksrepository\tanksproject\TankHeader.h(589): warning C4101: 'botLifeAux': unreferenced local variable
   Generating code
-  1 of 508 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  141 of 531 functions (26.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    31 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Release\TanksProject.exe
   TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Release\TanksProject.pdb (Full PDB)

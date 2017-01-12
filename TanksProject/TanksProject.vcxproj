@@ -150,6 +150,8 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bots.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="ExplosionResources.h" />
     <ClInclude Include="ProjectileRes.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="Projectiles.h" />
@@ -160,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Bots.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="Projectiles.cpp" />
     <ClCompile Include="TankPlayer.cpp" />

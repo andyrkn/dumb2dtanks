@@ -110,6 +110,11 @@ sf::Texture Nr1BText, Nr2BText, Nr3BText, Nr4BText, Nr5BText;
 sf::Texture EasyText, NormalText, HardText, DifficultyText;
 sf::Texture SmallBoxTexture, LargeBoxTexture;
 
+//END SCREENS
+
+sf::RectangleShape VictoryScreen(sf::Vector2f(1200.0f, 600.0f)), DefeatScreen(sf::Vector2f(1200.0f, 600.0f));
+sf::Texture VictoryTexture, DefeatTexture;
+
 // MAP
 
 Maps Map;
@@ -218,6 +223,13 @@ void LoadVariables()
 
 	SmallBoxTexture.loadFromFile("Textures/SmallRectangleBox.png");
 	LargeBoxTexture.loadFromFile("Textures/LargeRectangleBox.png");
+
+	VictoryTexture.loadFromFile("Textures/EndGameScreen/Victory.png");
+	DefeatTexture.loadFromFile("Textures/EndGameScreen/Defeat.png");
+	VictoryScreen.setTexture(&VictoryTexture);
+	DefeatScreen.setTexture(&DefeatTexture);
+
+
 
 	ExitButton.setTexture(&ExitButtonText);
 	SingleplayerButton.setTexture(&SingpleButtonText);
@@ -371,8 +383,8 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 {
 	ButtonClickSound.play();
 	GameWindow.setFramerateLimit(450);
-	Bots bot[7];
-	int botLife[7];
+	Bots bot[5];
+	int botLife[5];
 
 	sf::RectangleShape PlayerGameTank = currentTank;
 
@@ -400,7 +412,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	PlayerHPtext.setStyle(sf::Text::Bold);
 	PlayerHPtext.setCharacterSize(24);
 	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
-
+	int botslost = 0;
 	while (GameWindow.isOpen())
 	{
 
@@ -425,28 +437,25 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 		}
 
 		player1.Update(delta, Map, botPos, botLife);
-		EndOfGame = true;
+		if (!player1.tankHP)player1.kill();
 		for (ib = 0; ib < BotsNumber; ib++)
 		{
 			tankLife = player1.tankHP;
 			bot[ib].tankHP = botLife[ib];
-			if (bot[ib].tankHP)
-			{
 
 				if(EasyDifficulty)		bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
 				if(NormalDifficulty)	bot[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
 				if(HardDifficulty)		bot[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets());
 
 				bot[ib].draw(GameWindow);
-				EndOfGame = false;
-			}
-			else if (hasBeenKilled[ib] == false)
+			
+		 if (hasBeenKilled[ib] == false && botLife[ib]==0)
 			{
+				botslost++;
 				bot[ib].changePos(2000.0f);
 				hasBeenKilled[ib] = true;
 			}
 			player1.tankHP = tankLife;
-			if (!player1.tankHP)GameWindow.close();
 		}
 
 		PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
@@ -456,16 +465,20 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 		GameWindow.draw(PlayerHPtext);
 
 
-
-		PlayerHPtext.setPosition(sf::Vector2f(1000.0f, 10.0f));
-		HPstring = "Enemy HP : ";
-		HPstring.push_back((char)bot[0].tankHP + 48);
-		PlayerHPtext.setString(HPstring);
-		GameWindow.draw(PlayerHPtext);
-
+		if (BotsNumber == 1) {
+			PlayerHPtext.setPosition(sf::Vector2f(1000.0f, 10.0f));
+			HPstring = "Enemy HP : ";
+			HPstring.push_back((char)bot[0].tankHP + 48);
+			PlayerHPtext.setString(HPstring);
+			GameWindow.draw(PlayerHPtext);
+		}
 
 		player1.draw(GameWindow);
 		Map.draw(GameWindow);
+
+		if (!player1.tankHP) GameWindow.draw(DefeatScreen);
+		if (botslost == BotsNumber)GameWindow.draw(VictoryScreen);
+
 		GameWindow.display();
 		GameWindow.clear(sf::Color(230, 230, 230));
 
@@ -525,19 +538,23 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 			}
 		}
 
+	
+
 		botPos[0] = player2.GetPosition();
 		botLife[0] = player2.tankHP;
 		player1.Update(delta, Map, botPos, botLife);
 		player2.tankHP = botLife[0];
 
+		if (!player1.tankHP)
+			player1.kill();
+
 		botPos[0] = player1.GetPosition();
 		botLife[0] = player1.tankHP;
 		player2.Update(delta, Map, botPos, botLife);
 		player1.tankHP = botLife[0];
-
-		if (player2.tankHP == 0 || player1.tankHP == 0) {
-			PvPWindow.close(); MainMenu.setVisible(true);
-		}
+		
+		if (!player2.tankHP)
+			player2.kill();
 
 		HPstring = "Player 1 HP : ";
 		HPstring.push_back((char)player1.tankHP + 48);
@@ -555,6 +572,10 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 		player1.draw(PvPWindow);
 		player2.draw(PvPWindow);
 		Map.draw(PvPWindow);
+
+		if (!player1.tankHP || !player2.tankHP)
+			PvPWindow.draw(VictoryScreen);
+
 		PvPWindow.display();
 		PvPWindow.clear(sf::Color(230, 230, 230));
 	}
@@ -659,8 +680,8 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 			botPos[ib] = bots[ib].GetPosition();
 			botLife[ib] = bots[ib].tankHP;
 		}
-
 		player1.Update(delta, Map, botPos, botLife);
+		if (!player1.tankHP) player1.kill();
 		for (ib = 0; ib < BotsNumber; ib++)
 		{
 			tankLife = player1.tankHP;
@@ -742,7 +763,6 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 				}
 			}
 			player1.tankHP = tankLife;
-			if (!player1.tankHP)GameWindow.close();
 		}
 		PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
 		string HPstring = "PlayerHP : ";
@@ -756,6 +776,10 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 
 		player1.draw(GameWindow);
 		Map.draw(GameWindow);
+
+		if (!player1.tankHP)
+			GameWindow.draw(DefeatScreen);
+
 		GameWindow.display();
 		GameWindow.clear(sf::Color(230, 230, 230));
 	}
