@@ -115,7 +115,8 @@ sf::Texture currentTextureSel, SelectMapText, Player2SelectedTexture, Player2Tex
 sf::Texture Nr1BText, Nr2BText, Nr3BText, Nr4BText, Nr5BText;
 sf::Texture EasyText, NormalText, HardText, DifficultyText;
 sf::Texture SmallBoxTexture, LargeBoxTexture;
-
+sf::Texture TankDetails;
+sf::RectangleShape TankDetailsBox;
 //END SCREENS
 
 sf::RectangleShape VictoryScreen(sf::Vector2f(1200.0f, 600.0f)), DefeatScreen(sf::Vector2f(1200.0f, 600.0f));
@@ -153,6 +154,11 @@ bool freeSpace(Bots bots[4], TankPlayer player1, sf::Vector2f v, int noBots)
 void LoadVariables()
 {
 	inittextures(playerTanksbackup, 5, tankVector, playerTankTextures, playerTanks, MAPS, mapsTextures, 3);
+
+	TankDetails.loadFromFile("Textures/bg.png");
+	TankDetailsBox.setSize(sf::Vector2f(540.0f, 600.0f));
+	TankDetailsBox.setTexture(&TankDetails);
+	TankDetailsBox.setPosition(450.0f, 0.0f);
 
 	//SETTINGS BUTTONS TEXTURE/POSITION
 	SingleplayerButton.setOrigin(largerRectangle.x / 2, largerRectangle.y / 2);
@@ -360,6 +366,7 @@ void OptionsWindowEngine(sf::RenderWindow &OptionsWindow)
 				break;
 			}
 	}
+
 
 	OptionsWindow.draw(Player2CurrentTankBox);
 	OptionsWindow.draw(NrOfBotsButton);

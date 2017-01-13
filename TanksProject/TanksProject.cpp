@@ -70,7 +70,7 @@ int main()
 			}
 
 		}
-
+		MainMenu.draw(TankDetailsBox);
 		drawButtons();
 		MainMenu.display();
 		MainMenu.clear(sf::Color(132, 137, 201));
