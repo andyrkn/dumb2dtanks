@@ -206,7 +206,7 @@ void LoadVariables()
 
 	DifficultyBox.setPosition(EasyButton.getPosition());
 	NumbersBox.setPosition(Nr3B.getPosition());
-	MapBox.setPosition(750.0f, 100.0f);
+	MapBox.setPosition(850.0f, 100.0f);
 
 	ExitButtonText.loadFromFile("Textures/MenuText.png");
 	SingpleButtonText.loadFromFile("Textures/SingleplayerText.png");

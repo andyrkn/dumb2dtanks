@@ -14,7 +14,7 @@ void _loadProjectileTexture()
 {
 	if (!loaded) {
 		ProjectileTexturegg.loadFromFile("Textures/bullet.png");
-		SmokeTexture.loadFromFile("Textures/smoke2.png");
+		SmokeTexture.loadFromFile("Textures/smoke.png");
 		SoundBuffer.loadFromFile("Sounds/TankFire.wav");
 		TankFireWAV.setBuffer(SoundBuffer);
 		loaded = true;
