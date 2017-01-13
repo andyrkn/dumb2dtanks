@@ -29,10 +29,12 @@ void inittextures(sf::RectangleShape tanks[], int nr, sf::Vector2f tanksize, sf:
 	for (int j = 0; j < noMaps; j++)
 	{
 		x = 150 * (j + 3);
-		Maps[j].setPosition(x, 100.0f);
-		Maps[j].setSize(sf::Vector2f(116.0f, 41.0f));
-		Maps[j].setOrigin(sf::Vector2f(58.0f, 20.5f));
+		Maps[j].setSize(sf::Vector2f(150.0f, 75.0f));
+		Maps[j].setOrigin(sf::Vector2f(75.0f, 37.5f));
 	}
+	Maps[0].setPosition(450, 100.0f);
+	Maps[1].setPosition(650, 100.0f);
+	Maps[2].setPosition(850, 100.0f);
 
 	for (int i = 0; i < nr; i++) {
 		x = 100 * (i + 5);
