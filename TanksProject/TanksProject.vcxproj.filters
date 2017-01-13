@@ -48,6 +48,9 @@
     <ClInclude Include="PowerUps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MapResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TanksProject.cpp">

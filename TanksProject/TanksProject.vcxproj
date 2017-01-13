@@ -152,6 +152,7 @@
     <ClInclude Include="Bots.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="ExplosionResources.h" />
+    <ClInclude Include="MapResources.h" />
     <ClInclude Include="PowerUps.h" />
     <ClInclude Include="ProjectileRes.h" />
     <ClInclude Include="Maps.h" />

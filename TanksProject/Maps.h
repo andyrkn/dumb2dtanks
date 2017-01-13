@@ -14,6 +14,7 @@ public:
 	void selectMap(int whichOne);
 private:
 	sf::RectangleShape walls[10];
+	sf::RectangleShape MapBackground;
 	unsigned int noWalls;
 };
 

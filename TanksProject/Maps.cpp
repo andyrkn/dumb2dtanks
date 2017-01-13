@@ -1,5 +1,5 @@
 #include "Maps.h"
-
+#include "MapResources.h"
 
 Maps::Maps()
 {
@@ -21,6 +21,7 @@ void Maps::MapInitialize1()
 	walls[5].setSize(sf::Vector2f(40.0f, 210.0f)); walls[5].setPosition(580.0f, 400.0f); walls[5].setFillColor(sf::Color::Blue);
 	walls[6].setSize(sf::Vector2f(500.0f, 40.0f)); walls[6].setPosition(-10.0f, 280.0f); walls[6].setFillColor(sf::Color::Blue);
 	walls[7].setSize(sf::Vector2f(500.0f, 40.0f)); walls[7].setPosition(700.0f, 280.0f); walls[7].setFillColor(sf::Color::Blue);
+
 }
 
 void Maps::MapInitialize2()
@@ -58,8 +59,9 @@ void Maps::MapInitialize3()
 
 void Maps::draw(sf::RenderWindow & window)
 {
-	for (int i = 0; i < noWalls; i++)
-		window.draw(walls[i]);
+	window.draw(MapBackground);
+//	for (int i = 0; i < noWalls; i++)
+	//	window.draw(walls[i]);
 }
 
 sf::RectangleShape Maps::getWall(int i)
@@ -74,19 +76,26 @@ int Maps::getNoWalls()
 
 void Maps::selectMap(int whichOne)
 {
+	MapBackground.setSize(sf::Vector2f(1200.0f, 600.0f));
+	_loadMapTexture(whichOne);
 	switch (whichOne)
 	{
-	case 0:
+	case 0: {
+
 		MapInitialize1();
-		break;
-	case 1:
+		break; }
+	case 1: {
+
 		MapInitialize2();
-		break;
-	case 2:
+		break; }
+	case 2: {
+
 		MapInitialize3();
-		break;
-	default:
+		break; }
+	default: {
+
 		MapInitialize3();
-		break;
+		break; }
 	}
+	MapBackground.setTexture(&bgTexture);
 }

@@ -12,7 +12,7 @@ Bots::Bots(sf::RectangleShape tankBody, sf::Texture * texture, int imageCount, f
 {
 	this->tankBody = tankBody;
 	this->tankBody.setOrigin(sf::Vector2f(this->tankBody.getSize().x / 2, this->tankBody.getSize().y / 2));
-	this->tankBody.move(0.0f, -60.0f);
+	this->tankBody.move(190.0f, 100.0f);
 	int x = rand() % 4 + 1;
 
 	if (x == 1) direction = true; else
@@ -796,4 +796,9 @@ void Bots::setPosition(sf::Vector2f v)
 		if (x == 2) startDown = true; else
 			if (x == 3) direction = false; else
 				if (x == 4) startUp = true;
+}
+
+bool Bots::getExplosionStatus()
+{
+	return explo.isExploding;
 }

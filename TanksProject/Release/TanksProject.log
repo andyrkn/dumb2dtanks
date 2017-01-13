@@ -1,55 +1,16 @@
-﻿Build started 13.01.2017 20:53:12.
-     1>Project "C:\Users\Mihai\Documents\TanksRepository\TanksProject\TanksProject.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\SFML-2.4.1\include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt TankPlayer.cpp TanksProject.cpp
-         TankPlayer.cpp
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\PowerUps.h(27): warning C4244: 'initializing': conversion from 'float' to 'time_t', possible loss of data
-     1>TankPlayer.cpp(162): warning C4018: '<': signed/unsigned mismatch
-     1>TankPlayer.cpp(177): warning C4018: '<': signed/unsigned mismatch
-     1>TankPlayer.cpp(191): warning C4018: '<': signed/unsigned mismatch
-         TanksProject.cpp
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\PowerUps.h(27): warning C4244: 'initializing': conversion from 'float' to 'time_t', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(31): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(135): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(136): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(137): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(138): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(142): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(143): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(144): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(145): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(184): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(185): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(323): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(356): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(419): warning C4996: 'sf::Text::setColor': was declared deprecated
-         C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(405): warning C4101: 'EndOfGame': unreferenced local variable
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(569): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(538): warning C4996: 'sf::Text::setColor': was declared deprecated
-         C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(732): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(707): warning C4996: 'sf::Text::setColor': was declared deprecated
-         C:\SFML-2.4.1\include\SFML/Graphics/Text.hpp(177): note: see declaration of 'sf::Text::setColor'
-     1>c:\users\mihai\documents\tanksrepository\tanksproject\TankHeader.h(636): warning C4101: 'botLifeAux': unreferenced local variable
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mihai\Documents\TanksRepository\Release\TanksProject.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\SFML-2.4.1\lib" "sfml-system.lib" "sfml-graphics.lib" "sfml-window.lib" "sfml-audio.lib" "sfml-network.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Mihai\Documents\TanksRepository\Release\TanksProject.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mihai\Documents\TanksRepository\Release\TanksProject.lib" /MACHINE:X86 /SAFESEH Release\Animation.obj
-         Release\Bots.obj
-         Release\Explosion.obj
-         Release\Maps.obj
-         Release\PowerUps.obj
-         Release\Projectiles.obj
-         Release\TankPlayer.obj
-         Release\TanksProject.obj
-         Generating code
-         2 of 572 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
-           0 functions were new in current compilation
-           0 functions had inline decision re-evaluated but remain unchanged
-         Finished generating code
-         TanksProject.vcxproj -> C:\Users\Mihai\Documents\TanksRepository\Release\TanksProject.exe
-     1>Done Building Project "C:\Users\Mihai\Documents\TanksRepository\TanksProject\TanksProject.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:02.49
+﻿  Bots.cpp
+c:\users\rakuens\documents\tanksrepository\tanksproject\PowerUps.h(27): warning C4244: 'initializing': conversion from 'float' to 'time_t', possible loss of data
+Bots.cpp(144): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(278): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(380): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(487): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(505): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(522): warning C4018: '<': signed/unsigned mismatch
+Bots.cpp(732): warning C4101: 'k': unreferenced local variable
+  Generating code
+  1 of 564 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Release\TanksProject.exe
+  TanksProject.vcxproj -> C:\Users\Rakuens\Documents\TanksRepository\Release\TanksProject.pdb (Full PDB)

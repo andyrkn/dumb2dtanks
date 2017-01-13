@@ -31,6 +31,8 @@ public:
 	void setDificulty(int level);
 	void setPosition(sf::Vector2f v);
 	bool stillTraped;
+	
+	bool getExplosionStatus();
 
 private:
 

@@ -67,8 +67,8 @@ void PowerUps::setPosition(Maps map)
 	while (repeat)
 	{
 		repeat = false;
-		posX = rand() % 1150 + 50;
-		posY = rand() % 550 + 50;
+		posX = rand() % 1100 + 50;
+		posY = rand() % 500 + 50;
 		for (int i = 4; i < map.getNoWalls(); i++)
 		{
 			sf::Vector2f wallPosition = map.getWall(i).getPosition();

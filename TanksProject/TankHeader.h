@@ -423,7 +423,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	int botslost = 0;
 	while (GameWindow.isOpen())
 	{
-
+		Map.draw(GameWindow);
 		//SinglePlayerEngine(GameWindow,PlayerHPtext,bot);
 		int ib, tankLife;
 		delta = clock.restart().asSeconds();
@@ -503,7 +503,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 		}
 
 		player1.draw(GameWindow);
-		Map.draw(GameWindow);
+
 
 		if (!player1.tankHP) GameWindow.draw(DefeatScreen);
 		if (botslost == BotsNumber)GameWindow.draw(VictoryScreen);
@@ -550,6 +550,7 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 	}
 
 	while (PvPWindow.isOpen()) {
+		Map.draw(PvPWindow);
 		delta = clock.restart().asSeconds();
 		sf::Event evnt2;
 		while (PvPWindow.pollEvent(evnt2))
@@ -618,7 +619,7 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 
 		player1.draw(PvPWindow);
 		player2.draw(PvPWindow);
-		Map.draw(PvPWindow);
+
 
 		if (!player1.tankHP || !player2.tankHP)
 			PvPWindow.draw(VictoryScreen);
@@ -710,6 +711,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
 	while (GameWindow.isOpen())
 	{
+		Map.draw(GameWindow);
 		int ib, tankLife;
 		delta = clock.restart().asSeconds();
 		sf::Event evnt1;
@@ -756,8 +758,8 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 		{
 			tankLife = player1.tankHP;
 			bots[ib].tankHP = botLife[ib];
-			if (bots[ib].tankHP)
-			{
+			
+			
 				if (bots[ib].getDificulty() == 1)	
 					bots[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife, ability);
 				if (bots[ib].getDificulty() == 2)	
@@ -765,8 +767,8 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 				if (bots[ib].getDificulty() == 3)	
 					bots[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets(), ability);
 				bots[ib].draw(GameWindow);
-			}
-			else
+			
+			if (!bots[ib].tankHP && !bots[ib].getExplosionStatus())
 			{
 				player1.tankHP++;
 				tankLife++;
@@ -793,7 +795,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 						break;
 					}
 				}
-				bots[ib].changePos(2000.0f);
+				//bots[ib].changePos(2000.0f);
 				while (true)
 				{
 					x = rand() % 4 + 1;
@@ -845,7 +847,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 		GameWindow.draw(PlayerHPtext);
 
 		player1.draw(GameWindow);
-		Map.draw(GameWindow);
+
 
 		if (!player1.tankHP)
 			GameWindow.draw(DefeatScreen);
