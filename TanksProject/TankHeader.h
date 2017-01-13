@@ -418,7 +418,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	sf::Font font;
 	font.loadFromFile("arial.ttf");
 	PlayerHPtext.setFont(font);
-	PlayerHPtext.setColor(sf::Color(108, 193, 129));
+	PlayerHPtext.setColor(sf::Color(112, 9, 9));
 	PlayerHPtext.setStyle(sf::Text::Bold);
 	PlayerHPtext.setCharacterSize(24);
 	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
@@ -537,7 +537,7 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 	sf::Font font;
 	font.loadFromFile("arial.ttf");
 	PlayerHPtext.setFont(font);
-	PlayerHPtext.setColor(sf::Color(108, 193, 129));
+	PlayerHPtext.setColor(sf::Color(112, 9, 9));
 	PlayerHPtext.setStyle(sf::Text::Bold);
 	PlayerHPtext.setCharacterSize(24);
 	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
@@ -855,7 +855,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 			GameWindow.draw(DefeatScreen);
 
 		GameWindow.display();
-		GameWindow.clear(sf::Color(230, 230, 230));
+		PlayerHPtext.setColor(sf::Color(112, 9, 9));
 	}
 	MainMenu.setVisible(true);
 }
