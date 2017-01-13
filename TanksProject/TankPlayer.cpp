@@ -1,12 +1,42 @@
 #include "TankPlayer.h"
 
 
-TankPlayer::TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime,short KeyPriority) :
+TankPlayer::TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime,short KeyPriority,int SelectedTank) :
 	animation(texture,imageCount, switchTime)
 {
 	this->tankBody = tankBody;
 	this->tankBody.setOrigin(sf::Vector2f(this->tankBody.getSize().x / 2, this->tankBody.getSize().y / 2));
 	this->KeyPriority = KeyPriority;
+
+	if (SelectedTank == 0) {
+		tankHP = 4;
+		Bspeed = 0.2f;
+		BbulletSpeed = 1.2f;
+	}
+
+	if (SelectedTank == 1) {
+		tankHP = 5;
+		Bspeed = 0.2f;
+		BbulletSpeed = 1.5f;
+	}
+	if (SelectedTank == 2) {
+		tankHP = 2;
+		Bspeed = 0.3f;
+		BbulletSpeed = 1.5f;
+	}
+
+	if (SelectedTank == 3) {
+		tankHP = 2;
+		Bspeed = 0.25f;
+		BbulletSpeed = 2.0f;
+	}
+
+	if (SelectedTank == 4) {
+		tankHP = 3;
+		Bspeed = 0.2f;
+		BbulletSpeed = 1.5f;
+	}
+
 }
 
 
@@ -18,7 +48,8 @@ TankPlayer::~TankPlayer()
 
 void TankPlayer::Update(float delta, Maps map, sf::Vector2f botPos[4], int botLife[4], PowerUps &ability)
 {
-	float speed = 0.25f, bulletSpeed = 1.5f;
+	float speed = Bspeed;
+	float bulletSpeed = BbulletSpeed;
 	bool didItMove = false, rightOnly = false, leftOnly = false, upOnly = false, downOnly = false, didItMoveOx = false, didItMoveOy = false;
 	if (tankHP)
 		if (stillTraped)

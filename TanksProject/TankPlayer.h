@@ -12,7 +12,7 @@ using namespace std;
 class TankPlayer
 {
 public:
-	TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime,short KeyPriority);
+	TankPlayer(sf::RectangleShape tankBody, sf::Texture* texture, int imageCount, float switchTime,short KeyPriority,int SelectedTank);
 	~TankPlayer();
 	void Update(float delta, Maps map, sf::Vector2f botPos[4], int botLife[4], PowerUps &ability);
 	void draw(sf::RenderWindow& window);
@@ -37,6 +37,8 @@ private:
 	Animation animation;
 	Explosion explo;
 	bool stillTraped = false;
+
+	float Bspeed = 0.25f, BbulletSpeed = 1.5f;
 };
 
 

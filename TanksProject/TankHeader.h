@@ -399,7 +399,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	sf::RectangleShape PlayerGameTank = currentTank;
 
 	PlayerGameTank.setPosition(100.0f, 100.0f);
-	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f,1);
+	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f,1,ct);
 
 	int used[] = { 0,0,0,0,0,0,0,0 };
 
@@ -523,11 +523,11 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 	sf::RectangleShape PlayerGameTank = currentTank;
 	PlayerGameTank.setPosition(100.0f, 100.0f);
 
-	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1);
+	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1,ct);
 
 	sf::RectangleShape PlayerGameTank2 = Player2Tank;
 	PlayerGameTank2.setPosition(1100.0f, 500.0f);
-	TankPlayer player2(PlayerGameTank2, &Player2SelectedTexture, 2, 0.2f, 2);
+	TankPlayer player2(PlayerGameTank2, &Player2SelectedTexture, 2, 0.2f, 2,ct);
 
 	float delta = 0.0f, deltaTime=0.0f;
 	sf::Clock clock;
@@ -641,7 +641,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 	sf::RectangleShape PlayerGameTank = currentTank;
 	time_t timer = time(NULL), timePrec = time(NULL);
 	PlayerGameTank.setPosition(570.0f, 270.0f);
-	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1);
+	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1,ct);
 	player1.tankHP = 5;
 	int x, noHardBots = 0;
 	sf::Vector2f botPos[4];
