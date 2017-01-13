@@ -4,8 +4,11 @@
 #include"Bots.h"
 #include "TankPlayer.h"
 #include "Maps.h"
+#include "PowerUps.h"
 #include<string>
 #include<random>
+#include<ctime>
+
 #define ToF(a) static_cast<float>(a)
 using namespace std;
 void inittextures(sf::RectangleShape tanks[], int nr, sf::Vector2f tanksize, sf::Texture textures[],sf::RectangleShape maintanks[], sf::RectangleShape Maps[], sf::Texture mapsTextures[], int noMaps)
@@ -75,6 +78,7 @@ int BotsNumber = 3;
 int ct;
 bool currentTankSelectedBool = false, mapSelected = false, Player2Selected = false;
 int Score = 0;
+bool PowerUpON = false;
 
 // RENDER WINDOWS 
 
@@ -118,6 +122,10 @@ sf::Texture VictoryTexture, DefeatTexture;
 // MAP
 
 Maps Map;
+
+//POWERUPS
+
+PowerUps ability;
 
 bool freeSpace(Bots bots[4], TankPlayer player1, sf::Vector2f v, int noBots)
 {
@@ -393,7 +401,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 
 	int used[] = { 0,0,0,0,0,0,0,0 };
 
-	float time = 0.0f, timePrec = 0.0f;
+	time_t timer = time(NULL), timePrec = time(NULL);
 	bool hasBeenKilled[] = { false, false, false, false }, EndOfGame;
 	sf::Vector2f botPos[4];
 
@@ -402,7 +410,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 
 	float delta = 0.0f;
 	sf::Clock clock;
-
+	double deltaTime;
 
 	sf::Text PlayerHPtext;
 	sf::Font font;
@@ -417,7 +425,6 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 	{
 
 		//SinglePlayerEngine(GameWindow,PlayerHPtext,bot);
-		timePrec = time;
 		int ib, tankLife;
 		delta = clock.restart().asSeconds();
 		sf::Event evnt1;
@@ -429,23 +436,45 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 				GameWindow.clear();
 			}
 		}
-
+		
 		for (ib = 0; ib < BotsNumber; ib++)
 		{
 			botPos[ib] = bot[ib].GetPosition();
 			botLife[ib] = bot[ib].tankHP;
 		}
 
-		player1.Update(delta, Map, botPos, botLife);
+		timer = time(NULL);
+		deltaTime = abs(difftime(timePrec, timer));
+		if(!PowerUpON)
+			if (deltaTime > 30.0)
+			{
+				ability.createPowerUp(timer, Map, player1.GetPosition());
+				PowerUpON = true;
+				timePrec = timer;
+			}
+		if (PowerUpON)
+		{
+			ability.update();
+			if (ability.getTime() > 15.0 || !ability.checkIsON())
+			{
+				ability.deletePowerUp();
+				PowerUpON = false;
+				timePrec = timer;
+			}
+			else
+				ability.draw(GameWindow);
+		}
+		
+		player1.Update(delta, Map, botPos, botLife, ability);
 		if (!player1.tankHP)player1.kill();
 		for (ib = 0; ib < BotsNumber; ib++)
 		{
 			tankLife = player1.tankHP;
 			bot[ib].tankHP = botLife[ib];
 
-				if(EasyDifficulty)		bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
-				if(NormalDifficulty)	bot[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
-				if(HardDifficulty)		bot[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets());
+				if(EasyDifficulty)		bot[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife, ability);
+				if(NormalDifficulty)	bot[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife, ability);
+				if(HardDifficulty)		bot[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets(), ability);
 
 				bot[ib].draw(GameWindow);
 			
@@ -498,9 +527,7 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 	PlayerGameTank2.setPosition(1100.0f, 500.0f);
 	TankPlayer player2(PlayerGameTank2, &Player2SelectedTexture, 2, 0.2f, 2);
 
-
-
-	float delta = 0.0f;
+	float delta = 0.0f, deltaTime=0.0f;
 	sf::Clock clock;
 
 
@@ -514,7 +541,7 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 	PlayerHPtext.setPosition(sf::Vector2f(15.0f, 10.0f));
 
 	std::string HPstring;
-
+	time_t timer = time(NULL), timePrec = time(NULL);
 	int botLife[] = { 0,0,0,0,0,0};
 	sf::Vector2f botPos[4];
 	for (int botPositions = 0; botPositions < 4; botPositions++) {
@@ -538,11 +565,31 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 			}
 		}
 
-	
+		timer = time(NULL);
+		deltaTime = abs(difftime(timePrec, timer));
+		if (!PowerUpON)
+			if (deltaTime > 30.0)
+			{
+				ability.createPowerUp(timer, Map, player1.GetPosition());
+				PowerUpON = true;
+				timePrec = timer;
+			}
+		if (PowerUpON)
+		{
+			ability.update();
+			if (ability.getTime() > 15.0 || !ability.checkIsON())
+			{
+				ability.deletePowerUp();
+				PowerUpON = false;
+				timePrec = timer;
+			}
+			else
+				ability.draw(PvPWindow);
+		}
 
 		botPos[0] = player2.GetPosition();
 		botLife[0] = player2.tankHP;
-		player1.Update(delta, Map, botPos, botLife);
+		player1.Update(delta, Map, botPos, botLife, ability);
 		player2.tankHP = botLife[0];
 
 		if (!player1.tankHP)
@@ -550,7 +597,7 @@ void PvPEngine(sf::RenderWindow &PvPWindow)
 
 		botPos[0] = player1.GetPosition();
 		botLife[0] = player1.tankHP;
-		player2.Update(delta, Map, botPos, botLife);
+		player2.Update(delta, Map, botPos, botLife, ability);
 		player1.tankHP = botLife[0];
 		
 		if (!player2.tankHP)
@@ -589,7 +636,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 	int botLife[7], botLifeAux[7];
 
 	sf::RectangleShape PlayerGameTank = currentTank;
-
+	time_t timer = time(NULL), timePrec = time(NULL);
 	PlayerGameTank.setPosition(570.0f, 270.0f);
 	TankPlayer player1(PlayerGameTank, &currentTextureSel, 2, 0.2f, 1);
 	player1.tankHP = 5;
@@ -651,7 +698,7 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 			}
 		}
 	}
-	float delta = 0.0f;
+	float delta = 0.0f, deltaTime=0.0f;
 	sf::Clock clock;
 	sf::Font font;
 	sf::Text PlayerHPtext;
@@ -680,7 +727,30 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 			botPos[ib] = bots[ib].GetPosition();
 			botLife[ib] = bots[ib].tankHP;
 		}
-		player1.Update(delta, Map, botPos, botLife);
+
+		timer = time(NULL);
+		deltaTime = abs(difftime(timePrec, timer));
+		if (!PowerUpON)
+			if (deltaTime > 30.0)
+			{
+				ability.createPowerUp(timer, Map, player1.GetPosition());
+				PowerUpON = true;
+				timePrec = timer;
+			}
+		if (PowerUpON)
+		{
+			ability.update();
+			if (ability.getTime() > 15.0 || !ability.checkIsON())
+			{
+				ability.deletePowerUp();
+				PowerUpON = false;
+				timePrec = timer;
+			}
+			else
+				ability.draw(GameWindow);
+		}
+
+		player1.Update(delta, Map, botPos, botLife, ability);
 		if (!player1.tankHP) player1.kill();
 		for (ib = 0; ib < BotsNumber; ib++)
 		{
@@ -689,11 +759,11 @@ void SurvivalEngine(sf::RenderWindow &GameWindow)
 			if (bots[ib].tankHP)
 			{
 				if (bots[ib].getDificulty() == 1)	
-					bots[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+					bots[ib].UpdateEasy(delta, Map, player1.GetPosition(), botPos, ib, tankLife, ability);
 				if (bots[ib].getDificulty() == 2)	
-					bots[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife);
+					bots[ib].UpdateNormal(delta, Map, player1.GetPosition(), botPos, ib, tankLife, ability);
 				if (bots[ib].getDificulty() == 3)	
-					bots[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets());
+					bots[ib].UpdateHard(delta, Map, player1.GetPosition(), botPos, ib, tankLife, player1.getBullets(), ability);
 				bots[ib].draw(GameWindow);
 			}
 			else

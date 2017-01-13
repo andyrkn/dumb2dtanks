@@ -152,6 +152,7 @@
     <ClInclude Include="Bots.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="ExplosionResources.h" />
+    <ClInclude Include="PowerUps.h" />
     <ClInclude Include="ProjectileRes.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="Projectiles.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Bots.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Maps.cpp" />
+    <ClCompile Include="PowerUps.cpp" />
     <ClCompile Include="Projectiles.cpp" />
     <ClCompile Include="TankPlayer.cpp" />
     <ClCompile Include="TanksProject.cpp" />
