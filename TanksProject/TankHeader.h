@@ -455,7 +455,7 @@ void SinglePlayerEngine(sf::RenderWindow &GameWindow)
 		timer = time(NULL);
 		deltaTime = abs(difftime(timePrec, timer));
 		if(!PowerUpON)
-			if (deltaTime > 30.0)
+			if (deltaTime > 21.0)
 			{
 				ability.createPowerUp(timer, Map, player1.GetPosition());
 				PowerUpON = true;

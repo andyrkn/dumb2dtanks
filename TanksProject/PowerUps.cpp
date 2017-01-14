@@ -28,7 +28,7 @@ void PowerUps::createPowerUp(time_t startTime, Maps map, sf::Vector2f playerPos)
 	switch (type)
 	{
 	case 1:
-		texture.loadFromFile("Textures/PowerUp1.jpg");
+		texture.loadFromFile("Textures/PowerUp1.png");
 		break;
 	case 2:
 		texture.loadFromFile("Textures/PowerUp2.png");
