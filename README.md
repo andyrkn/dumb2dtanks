@@ -1,5 +1,5 @@
-# TanksRepository
-tank project 
+# dumb2dtanks
+tank project  for my first year in computer science
 
 ## INSTALL & RUN
 
